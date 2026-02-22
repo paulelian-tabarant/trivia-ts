@@ -6,7 +6,7 @@ import {Logger} from "../src/logger";
 describe('The test environment', () => {
     it("should do something with the game", function () {
         let currentRoll = 0;
-        const gameMaster: GameMaster = {
+        const gameMasterStub: GameMaster = {
             getNextRoll: function (): number {
                 currentRoll++;
                 return currentRoll;
@@ -17,13 +17,13 @@ describe('The test environment', () => {
         }
 
         const capturedOutput = []
-        const logger: Logger = {
+        const loggerSpy: Logger = {
             log: function (message: string): void {
                 capturedOutput.push(message)
             }
         }
 
-        const gameRunner = new GameRunner(gameMaster, logger);
+        const gameRunner = new GameRunner(gameMasterStub, loggerSpy);
 
         gameRunner.runGame()
 
