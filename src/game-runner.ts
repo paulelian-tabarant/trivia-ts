@@ -1,9 +1,5 @@
 import {Game} from './game';
-
-export interface GameMaster {
-    getNextRoll(): number
-    isWrongAnswer(): boolean
-}
+import {GameMaster} from "./game-master";
 
 export class GameRunner implements GameMaster {
     public static main(): void {

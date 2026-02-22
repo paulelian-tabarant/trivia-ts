@@ -1,5 +1,6 @@
 import {describe, expect, it} from 'vitest';
-import {GameMaster, GameRunner} from '../src/game-runner';
+import {GameRunner} from '../src/game-runner';
+import {GameMaster} from "../src/game-master";
 
 describe('The test environment', () => {
     it("should do something with the game", function () {
