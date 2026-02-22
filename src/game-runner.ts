@@ -1,5 +1,6 @@
 import {Game} from './game';
 import {GameMaster} from "./game-master";
+import {Logger} from "./logger";
 
 export class GameRunner implements GameMaster {
     public static main(): void {
@@ -7,11 +8,11 @@ export class GameRunner implements GameMaster {
         gameRunner.runGame();
     }
 
-    constructor(private readonly gameMaster: GameMaster = this) {
+    constructor(private readonly gameMaster: GameMaster = this, private readonly logger?: Logger) {
     }
 
     public runGame() {
-        const game = new Game();
+        const game = new Game(this.logger);
         game.add("Chet");
         game.add("Pat");
         game.add("Sue");
