@@ -7,18 +7,16 @@ describe('The test environment', () => {
     it("should do something with the game", function () {
         let currentRoll = 0;
         const gameMasterStub: GameMaster = {
-            getNextRoll: function (): number {
+            getNextRoll: (): number => {
                 currentRoll++;
                 return currentRoll;
             },
-            isWrongAnswer: function (): boolean {
-                return false;
-            }
+            isWrongAnswer: (): boolean => false
         }
 
         const capturedOutput = []
         const loggerSpy: Logger = {
-            log: function (message: string): void {
+            log: (message: string): void => {
                 capturedOutput.push(message)
             }
         }
