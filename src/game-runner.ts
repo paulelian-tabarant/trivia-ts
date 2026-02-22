@@ -26,11 +26,11 @@ export class GameRunner {
         } while (notAWinner);
     }
 
-    private static getNextRoll() {
+    static getNextRoll() {
         return Math.floor(Math.random() * 6) + 1;
     }
 
-    private static isWrongAnswer() {
+    static isWrongAnswer() {
         return Math.floor(Math.random() * 10) == 7;
     }
 }
