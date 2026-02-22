@@ -10,7 +10,7 @@ export class GameRunner {
         let notAWinner;
         do {
 
-            game.roll(Math.floor(Math.random() * 6) + 1);
+            game.roll(this.getNextRoll());
 
             if (this.isWrongAnswer()) {
                 notAWinner = game.wrongAnswer();
@@ -19,6 +19,10 @@ export class GameRunner {
             }
 
         } while (notAWinner);
+    }
+
+    private static getNextRoll() {
+        return Math.floor(Math.random() * 6) + 1;
     }
 
     private static isWrongAnswer() {
