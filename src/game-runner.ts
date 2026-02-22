@@ -1,6 +1,6 @@
 import {Game} from './game';
 
-interface GameMaster {
+export interface GameMaster {
     getNextRoll(): number
     isWrongAnswer(): boolean
 }
@@ -14,7 +14,7 @@ export class GameRunner implements GameMaster {
     constructor(private readonly gameMaster: GameMaster = this) {
     }
 
-    private runGame() {
+    public runGame() {
         const game = new Game();
         game.add("Chet");
         game.add("Pat");
