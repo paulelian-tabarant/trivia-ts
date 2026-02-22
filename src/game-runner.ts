@@ -1,5 +1,10 @@
 import {Game} from './game';
 
+interface GameMaster {
+    getNextRoll(): number
+    isWrongAnswer(): boolean
+}
+
 export class GameRunner {
     public static main(): void {
         const game = new Game();
