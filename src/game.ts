@@ -1,6 +1,6 @@
 import {Logger} from "./logger";
 
-export class Game {
+export class Game implements Logger {
 
     private players: Array<string> = [];
     private places: Array<number> = [];
