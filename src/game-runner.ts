@@ -7,6 +7,11 @@ interface GameMaster {
 
 export class GameRunner {
     public static main(): void {
+        const gameRunner = new GameRunner();
+        gameRunner.runGame();
+    }
+
+    private runGame() {
         const game = new Game();
         game.add("Chet");
         game.add("Pat");
@@ -15,9 +20,9 @@ export class GameRunner {
         let notAWinner;
         do {
 
-            game.roll(this.getNextRoll());
+            game.roll(GameRunner.getNextRoll());
 
-            if (this.isWrongAnswer()) {
+            if (GameRunner.isWrongAnswer()) {
                 notAWinner = game.wrongAnswer();
             } else {
                 notAWinner = game.wasCorrectlyAnswered();
