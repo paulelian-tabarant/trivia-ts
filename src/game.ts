@@ -1,3 +1,5 @@
+import {Logger} from "./logger";
+
 export class Game {
 
     private players: Array<string> = [];
@@ -12,7 +14,7 @@ export class Game {
     private sportsQuestions: Array<string> = [];
     private rockQuestions: Array<string> = [];
 
-    constructor() {
+    constructor(private readonly logger: Logger = this) {
 
         for (let i = 0; i < 50; i++) {
             this.popQuestions.push("Pop Question " + i);
@@ -32,8 +34,8 @@ export class Game {
         this.purses[this.howManyPlayers()] = 0;
         this.inPenaltyBox[this.howManyPlayers()] = false;
 
-        this.log(name + " was added");
-        this.log("They are player number " + this.players.length);
+        this.logger.log(name + " was added");
+        this.logger.log("They are player number " + this.players.length);
 
         return true;
     }
@@ -43,24 +45,24 @@ export class Game {
     }
 
     public roll(roll: number) {
-        this.log(this.players[this.currentPlayer] + " is the current player");
-        this.log("They have rolled a " + roll);
+        this.logger.log(this.players[this.currentPlayer] + " is the current player");
+        this.logger.log("They have rolled a " + roll);
     
         if (this.inPenaltyBox[this.currentPlayer]) {
           if (roll % 2 != 0) {
             this.isGettingOutOfPenaltyBox = true;
     
-            this.log(this.players[this.currentPlayer] + " is getting out of the penalty box");
+            this.logger.log(this.players[this.currentPlayer] + " is getting out of the penalty box");
             this.places[this.currentPlayer] = this.places[this.currentPlayer] + roll;
             if (this.places[this.currentPlayer] > 11) {
               this.places[this.currentPlayer] = this.places[this.currentPlayer] - 12;
             }
     
-            this.log(this.players[this.currentPlayer] + "'s new location is " + this.places[this.currentPlayer]);
-            this.log("The category is " + this.currentCategory());
+            this.logger.log(this.players[this.currentPlayer] + "'s new location is " + this.places[this.currentPlayer]);
+            this.logger.log("The category is " + this.currentCategory());
             this.askQuestion();
           } else {
-            this.log(this.players[this.currentPlayer] + " is not getting out of the penalty box");
+            this.logger.log(this.players[this.currentPlayer] + " is not getting out of the penalty box");
             this.isGettingOutOfPenaltyBox = false;
           }
         } else {
@@ -70,21 +72,21 @@ export class Game {
             this.places[this.currentPlayer] = this.places[this.currentPlayer] - 12;
           }
     
-          this.log(this.players[this.currentPlayer] + "'s new location is " + this.places[this.currentPlayer]);
-          this.log("The category is " + this.currentCategory());
+          this.logger.log(this.players[this.currentPlayer] + "'s new location is " + this.places[this.currentPlayer]);
+          this.logger.log("The category is " + this.currentCategory());
           this.askQuestion();
         }
     }
 
     private askQuestion(): void {
         if (this.currentCategory() == 'Pop')
-            this.log(this.popQuestions.shift());
+            this.logger.log(this.popQuestions.shift());
         if (this.currentCategory() == 'Science')
-            this.log(this.scienceQuestions.shift());
+            this.logger.log(this.scienceQuestions.shift());
         if (this.currentCategory() == 'Sports')
-            this.log(this.sportsQuestions.shift());
+            this.logger.log(this.sportsQuestions.shift());
         if (this.currentCategory() == 'Rock')
-            this.log(this.rockQuestions.shift());
+            this.logger.log(this.rockQuestions.shift());
     }
 
     private currentCategory(): string {
@@ -114,8 +116,8 @@ export class Game {
     }
 
     public wrongAnswer(): boolean {
-        this.log('Question was incorrectly answered');
-        this.log(this.players[this.currentPlayer] + " was sent to the penalty box");
+        this.logger.log('Question was incorrectly answered');
+        this.logger.log(this.players[this.currentPlayer] + " was sent to the penalty box");
         this.inPenaltyBox[this.currentPlayer] = true;
     
         this.currentPlayer += 1;
@@ -124,23 +126,19 @@ export class Game {
         return true;
     }
 
-    private log(message: string) {
-        console.log(message);
-    }
-
     public wasCorrectlyAnswered(): boolean {
         if (this.inPenaltyBox[this.currentPlayer]) {
             if (this.isGettingOutOfPenaltyBox) {
-              this.log('Answer was correct!!!!');
+              this.logger.log('Answer was correct!!!!');
               this.purses[this.currentPlayer] += 1;
-              this.log(this.players[this.currentPlayer] + " now has " +
+              this.logger.log(this.players[this.currentPlayer] + " now has " +
               this.purses[this.currentPlayer] + " Gold Coins.");
-      
+
               var winner = this.didPlayerWin();
               this.currentPlayer += 1;
               if (this.currentPlayer == this.players.length)
                 this.currentPlayer = 0;
-      
+
               return winner;
             } else {
               this.currentPlayer += 1;
@@ -148,24 +146,27 @@ export class Game {
                 this.currentPlayer = 0;
               return true;
             }
-      
-      
+
+
           } else {
-      
-            this.log("Answer was corrent!!!!");
-      
+
+            this.logger.log("Answer was corrent!!!!");
+
             this.purses[this.currentPlayer] += 1;
-            this.log(this.players[this.currentPlayer] + " now has " +
+            this.logger.log(this.players[this.currentPlayer] + " now has " +
                 this.purses[this.currentPlayer] + " Gold Coins.");
-      
+
             var winner = this.didPlayerWin();
-      
+
             this.currentPlayer += 1;
             if (this.currentPlayer == this.players.length)
                 this.currentPlayer = 0;
-      
+
             return winner;
           }
     }
 
+    public log(message: string) {
+        console.log(message);
+    }
 }
