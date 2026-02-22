@@ -1,17 +1,21 @@
 import {describe, expect, it} from 'vitest';
-import {GameRunner} from '../src/game-runner';
 import {GameMaster} from "../src/game-master";
 import {Logger} from "../src/logger";
+import {GameRunner} from "../src/game-runner-class";
 
 describe('The test environment', () => {
     it("should do something with the game", function () {
         let currentRoll = 0;
+        let wrongAnswer = false
         const gameMasterStub: GameMaster = {
-            getNextRoll: (): number => {
-                currentRoll++;
+            getNextRoll: function (): number {
+                currentRoll = currentRoll >= 6 ? 0 : currentRoll + 1;
                 return currentRoll;
             },
-            isWrongAnswer: (): boolean => false
+            isWrongAnswer: function (): boolean {
+                wrongAnswer = !wrongAnswer
+                return wrongAnswer;
+            }
         }
 
         const capturedOutput = []
@@ -40,8 +44,8 @@ They have rolled a 1
 Chet's new location is NaN
 The category is Rock
 Rock Question 0
-Answer was corrent!!!!
-Chet now has NaN Gold Coins.
+Question was incorrectly answered
+Chet was sent to the penalty box
 Pat is the current player
 They have rolled a 2
 Pat's new location is 2
@@ -54,105 +58,377 @@ They have rolled a 3
 Sue's new location is 3
 The category is Rock
 Rock Question 1
-Answer was corrent!!!!
-Sue now has 1 Gold Coins.
+Question was incorrectly answered
+Sue was sent to the penalty box
 Chet is the current player
 They have rolled a 4
-Chet's new location is NaN
-The category is Rock
-Rock Question 2
-Answer was corrent!!!!
-Chet now has NaN Gold Coins.
+Chet is not getting out of the penalty box
 Pat is the current player
 They have rolled a 5
 Pat's new location is 7
 The category is Rock
-Rock Question 3
-Answer was corrent!!!!
-Pat now has 2 Gold Coins.
+Rock Question 2
+Question was incorrectly answered
+Pat was sent to the penalty box
 Sue is the current player
 They have rolled a 6
+Sue is not getting out of the penalty box
+Chet is the current player
+They have rolled a 0
+Chet is not getting out of the penalty box
+Question was incorrectly answered
+Chet was sent to the penalty box
+Pat is the current player
+They have rolled a 1
+Pat is getting out of the penalty box
+Pat's new location is 8
+The category is Pop
+Pop Question 0
+Answer was correct!!!!
+Pat now has 2 Gold Coins.
+Sue is the current player
+They have rolled a 2
+Sue is not getting out of the penalty box
+Question was incorrectly answered
+Sue was sent to the penalty box
+Chet is the current player
+They have rolled a 3
+Chet is getting out of the penalty box
+Chet's new location is NaN
+The category is Rock
+Rock Question 3
+Answer was correct!!!!
+Chet now has NaN Gold Coins.
+Pat is the current player
+They have rolled a 4
+Pat is not getting out of the penalty box
+Question was incorrectly answered
+Pat was sent to the penalty box
+Sue is the current player
+They have rolled a 5
+Sue is getting out of the penalty box
+Sue's new location is 8
+The category is Pop
+Pop Question 1
+Answer was correct!!!!
+Sue now has 1 Gold Coins.
+Chet is the current player
+They have rolled a 6
+Chet is not getting out of the penalty box
+Question was incorrectly answered
+Chet was sent to the penalty box
+Pat is the current player
+They have rolled a 0
+Pat is not getting out of the penalty box
+Sue is the current player
+They have rolled a 1
+Sue is getting out of the penalty box
 Sue's new location is 9
 The category is Science
 Science Question 0
-Answer was corrent!!!!
-Sue now has 2 Gold Coins.
+Question was incorrectly answered
+Sue was sent to the penalty box
 Chet is the current player
-They have rolled a 7
-Chet's new location is NaN
+They have rolled a 2
+Chet is not getting out of the penalty box
+Pat is the current player
+They have rolled a 3
+Pat is getting out of the penalty box
+Pat's new location is 11
 The category is Rock
 Rock Question 4
-Answer was corrent!!!!
-Chet now has NaN Gold Coins.
-Pat is the current player
-They have rolled a 8
-Pat's new location is 3
+Question was incorrectly answered
+Pat was sent to the penalty box
+Sue is the current player
+They have rolled a 4
+Sue is not getting out of the penalty box
+Chet is the current player
+They have rolled a 5
+Chet is getting out of the penalty box
+Chet's new location is NaN
 The category is Rock
 Rock Question 5
-Answer was corrent!!!!
-Pat now has 3 Gold Coins.
+Question was incorrectly answered
+Chet was sent to the penalty box
+Pat is the current player
+They have rolled a 6
+Pat is not getting out of the penalty box
 Sue is the current player
-They have rolled a 9
-Sue's new location is 6
-The category is Sports
-Sports Question 1
-Answer was corrent!!!!
-Sue now has 3 Gold Coins.
+They have rolled a 0
+Sue is not getting out of the penalty box
+Question was incorrectly answered
+Sue was sent to the penalty box
 Chet is the current player
-They have rolled a 10
+They have rolled a 1
+Chet is getting out of the penalty box
 Chet's new location is NaN
 The category is Rock
 Rock Question 6
-Answer was corrent!!!!
+Answer was correct!!!!
 Chet now has NaN Gold Coins.
 Pat is the current player
-They have rolled a 11
-Pat's new location is 2
-The category is Sports
-Sports Question 2
-Answer was corrent!!!!
-Pat now has 4 Gold Coins.
+They have rolled a 2
+Pat is not getting out of the penalty box
+Question was incorrectly answered
+Pat was sent to the penalty box
 Sue is the current player
-They have rolled a 12
-Sue's new location is 6
-The category is Sports
-Sports Question 3
-Answer was corrent!!!!
-Sue now has 4 Gold Coins.
+They have rolled a 3
+Sue is getting out of the penalty box
+Sue's new location is 0
+The category is Pop
+Pop Question 2
+Answer was correct!!!!
+Sue now has 2 Gold Coins.
 Chet is the current player
-They have rolled a 13
+They have rolled a 4
+Chet is not getting out of the penalty box
+Question was incorrectly answered
+Chet was sent to the penalty box
+Pat is the current player
+They have rolled a 5
+Pat is getting out of the penalty box
+Pat's new location is 4
+The category is Pop
+Pop Question 3
+Answer was correct!!!!
+Pat now has 3 Gold Coins.
+Sue is the current player
+They have rolled a 6
+Sue is not getting out of the penalty box
+Question was incorrectly answered
+Sue was sent to the penalty box
+Chet is the current player
+They have rolled a 0
+Chet is not getting out of the penalty box
+Pat is the current player
+They have rolled a 1
+Pat is getting out of the penalty box
+Pat's new location is 5
+The category is Science
+Science Question 1
+Question was incorrectly answered
+Pat was sent to the penalty box
+Sue is the current player
+They have rolled a 2
+Sue is not getting out of the penalty box
+Chet is the current player
+They have rolled a 3
+Chet is getting out of the penalty box
 Chet's new location is NaN
 The category is Rock
 Rock Question 7
-Answer was corrent!!!!
-Chet now has NaN Gold Coins.
+Question was incorrectly answered
+Chet was sent to the penalty box
 Pat is the current player
-They have rolled a 14
-Pat's new location is 4
-The category is Pop
-Pop Question 0
-Answer was corrent!!!!
-Pat now has 5 Gold Coins.
+They have rolled a 4
+Pat is not getting out of the penalty box
 Sue is the current player
-They have rolled a 15
-Sue's new location is 9
+They have rolled a 5
+Sue is getting out of the penalty box
+Sue's new location is 5
 The category is Science
-Science Question 1
-Answer was corrent!!!!
-Sue now has 5 Gold Coins.
+Science Question 2
+Question was incorrectly answered
+Sue was sent to the penalty box
 Chet is the current player
-They have rolled a 16
+They have rolled a 6
+Chet is not getting out of the penalty box
+Pat is the current player
+They have rolled a 0
+Pat is not getting out of the penalty box
+Question was incorrectly answered
+Pat was sent to the penalty box
+Sue is the current player
+They have rolled a 1
+Sue is getting out of the penalty box
+Sue's new location is 6
+The category is Sports
+Sports Question 1
+Answer was correct!!!!
+Sue now has 3 Gold Coins.
+Chet is the current player
+They have rolled a 2
+Chet is not getting out of the penalty box
+Question was incorrectly answered
+Chet was sent to the penalty box
+Pat is the current player
+They have rolled a 3
+Pat is getting out of the penalty box
+Pat's new location is 8
+The category is Pop
+Pop Question 4
+Answer was correct!!!!
+Pat now has 4 Gold Coins.
+Sue is the current player
+They have rolled a 4
+Sue is not getting out of the penalty box
+Question was incorrectly answered
+Sue was sent to the penalty box
+Chet is the current player
+They have rolled a 5
+Chet is getting out of the penalty box
 Chet's new location is NaN
 The category is Rock
 Rock Question 8
-Answer was corrent!!!!
+Answer was correct!!!!
 Chet now has NaN Gold Coins.
 Pat is the current player
-They have rolled a 17
-Pat's new location is 9
+They have rolled a 6
+Pat is not getting out of the penalty box
+Question was incorrectly answered
+Pat was sent to the penalty box
+Sue is the current player
+They have rolled a 0
+Sue is not getting out of the penalty box
+Chet is the current player
+They have rolled a 1
+Chet is getting out of the penalty box
+Chet's new location is NaN
+The category is Rock
+Rock Question 9
+Question was incorrectly answered
+Chet was sent to the penalty box
+Pat is the current player
+They have rolled a 2
+Pat is not getting out of the penalty box
+Sue is the current player
+They have rolled a 3
+Sue is getting out of the penalty box
+Sue's new location is 9
 The category is Science
-Science Question 2
-Answer was corrent!!!!
-Pat now has 6 Gold Coins.
-    `
-});
+Science Question 3
+Question was incorrectly answered
+Sue was sent to the penalty box
+Chet is the current player
+They have rolled a 4
+Chet is not getting out of the penalty box
+Pat is the current player
+They have rolled a 5
+Pat is getting out of the penalty box
+Pat's new location is 1
+The category is Science
+Science Question 4
+Question was incorrectly answered
+Pat was sent to the penalty box
+Sue is the current player
+They have rolled a 6
+Sue is not getting out of the penalty box
+Chet is the current player
+They have rolled a 0
+Chet is not getting out of the penalty box
+Question was incorrectly answered
+Chet was sent to the penalty box
+Pat is the current player
+They have rolled a 1
+Pat is getting out of the penalty box
+Pat's new location is 2
+The category is Sports
+Sports Question 2
+Answer was correct!!!!
+Pat now has 5 Gold Coins.
+Sue is the current player
+They have rolled a 2
+Sue is not getting out of the penalty box
+Question was incorrectly answered
+Sue was sent to the penalty box
+Chet is the current player
+They have rolled a 3
+Chet is getting out of the penalty box
+Chet's new location is NaN
+The category is Rock
+Rock Question 10
+Answer was correct!!!!
+Chet now has NaN Gold Coins.
+Pat is the current player
+They have rolled a 4
+Pat is not getting out of the penalty box
+Question was incorrectly answered
+Pat was sent to the penalty box
+Sue is the current player
+They have rolled a 5
+Sue is getting out of the penalty box
+Sue's new location is 2
+The category is Sports
+Sports Question 3
+Answer was correct!!!!
+Sue now has 4 Gold Coins.
+Chet is the current player
+They have rolled a 6
+Chet is not getting out of the penalty box
+Question was incorrectly answered
+Chet was sent to the penalty box
+Pat is the current player
+They have rolled a 0
+Pat is not getting out of the penalty box
+Sue is the current player
+They have rolled a 1
+Sue is getting out of the penalty box
+Sue's new location is 3
+The category is Rock
+Rock Question 11
+Question was incorrectly answered
+Sue was sent to the penalty box
+Chet is the current player
+They have rolled a 2
+Chet is not getting out of the penalty box
+Pat is the current player
+They have rolled a 3
+Pat is getting out of the penalty box
+Pat's new location is 5
+The category is Science
+Science Question 5
+Question was incorrectly answered
+Pat was sent to the penalty box
+Sue is the current player
+They have rolled a 4
+Sue is not getting out of the penalty box
+Chet is the current player
+They have rolled a 5
+Chet is getting out of the penalty box
+Chet's new location is NaN
+The category is Rock
+Rock Question 12
+Question was incorrectly answered
+Chet was sent to the penalty box
+Pat is the current player
+They have rolled a 6
+Pat is not getting out of the penalty box
+Sue is the current player
+They have rolled a 0
+Sue is not getting out of the penalty box
+Question was incorrectly answered
+Sue was sent to the penalty box
+Chet is the current player
+They have rolled a 1
+Chet is getting out of the penalty box
+Chet's new location is NaN
+The category is Rock
+Rock Question 13
+Answer was correct!!!!
+Chet now has NaN Gold Coins.
+Pat is the current player
+They have rolled a 2
+Pat is not getting out of the penalty box
+Question was incorrectly answered
+Pat was sent to the penalty box
+Sue is the current player
+They have rolled a 3
+Sue is getting out of the penalty box
+Sue's new location is 6
+The category is Sports
+Sports Question 4
+Answer was correct!!!!
+Sue now has 5 Gold Coins.
+Chet is the current player
+They have rolled a 4
+Chet is not getting out of the penalty box
+Question was incorrectly answered
+Chet was sent to the penalty box
+Pat is the current player
+They have rolled a 5
+Pat is getting out of the penalty box
+Pat's new location is 10
+The category is Sports
+Sports Question 5
+Answer was correct!!!!
+Pat now has 6 Gold Coins.`});
