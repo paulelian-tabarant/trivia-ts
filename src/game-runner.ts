@@ -5,10 +5,13 @@ interface GameMaster {
     isWrongAnswer(): boolean
 }
 
-export class GameRunner {
+export class GameRunner implements GameMaster {
     public static main(): void {
         const gameRunner = new GameRunner();
         gameRunner.runGame();
+    }
+
+    constructor(private readonly gameMaster: GameMaster = this) {
     }
 
     private runGame() {
@@ -20,9 +23,9 @@ export class GameRunner {
         let notAWinner;
         do {
 
-            game.roll(this.getNextRoll());
+            game.roll(this.gameMaster.getNextRoll());
 
-            if (this.isWrongAnswer()) {
+            if (this.gameMaster.isWrongAnswer()) {
                 notAWinner = game.wrongAnswer();
             } else {
                 notAWinner = game.wasCorrectlyAnswered();
