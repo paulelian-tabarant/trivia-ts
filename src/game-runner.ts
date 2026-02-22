@@ -12,13 +12,17 @@ export class GameRunner {
 
             game.roll(Math.floor(Math.random() * 6) + 1);
 
-            if (Math.floor(Math.random() * 10) == 7) {
+            if (this.isWrongAnswer()) {
                 notAWinner = game.wrongAnswer();
             } else {
                 notAWinner = game.wasCorrectlyAnswered();
             }
 
         } while (notAWinner);
+    }
+
+    private static isWrongAnswer() {
+        return Math.floor(Math.random() * 10) == 7;
     }
 }
 
