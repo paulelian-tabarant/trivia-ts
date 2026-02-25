@@ -42,10 +42,10 @@ export class Game implements Logger {
             QuestionCategory.ROCK,
         ].forEach(category => this.createFiftyQuestionsOf(category))
 
-        players.forEach((player) => {
-            this.playerNames.push(player);
+        this.playerNames = [...players]
 
-            const newPlayerIndex = this.playerNames.length;
+        players.forEach((player, index) => {
+            const newPlayerIndex = index + 1;
             this.places[newPlayerIndex] = 0;
             this.purses[newPlayerIndex] = 0;
             this.inPenaltyBox[newPlayerIndex] = false;
