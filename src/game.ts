@@ -106,10 +106,11 @@ export class Game implements Logger {
         this.logger.log(this.players[this.currentPlayer] + " now has " +
             this.purses[this.currentPlayer] + " Gold Coins.");
 
-        var winner = this.didCurrentPlayerWin();
+        const didPlayerWin = !(this.purses[this.currentPlayer] == 6);
+
         this.moveToNextPlayer()
 
-        return winner;
+        return didPlayerWin;
     }
 
     public wrongAnswer(): boolean {
