@@ -62,29 +62,26 @@ export class Game implements Logger {
                 this.isGettingOutOfPenaltyBox = true;
 
                 this.logger.log(this.players[this.currentPlayerIndex] + " is getting out of the penalty box");
-                this.places[this.currentPlayerIndex] = this.places[this.currentPlayerIndex] + roll;
-                if (this.places[this.currentPlayerIndex] > 11) {
-                    this.places[this.currentPlayerIndex] = this.places[this.currentPlayerIndex] - 12;
-                }
-
-                this.logger.log(this.players[this.currentPlayerIndex] + "'s new location is " + this.places[this.currentPlayerIndex]);
-                this.logger.log("The category is " + this.currentCategory());
-                this.askQuestion();
+                this.extracted(roll);
             } else {
                 this.logger.log(this.players[this.currentPlayerIndex] + " is not getting out of the penalty box");
                 this.isGettingOutOfPenaltyBox = false;
             }
         } else {
 
-            this.places[this.currentPlayerIndex] = this.places[this.currentPlayerIndex] + roll;
-            if (this.places[this.currentPlayerIndex] > 11) {
-                this.places[this.currentPlayerIndex] = this.places[this.currentPlayerIndex] - 12;
-            }
-
-            this.logger.log(this.players[this.currentPlayerIndex] + "'s new location is " + this.places[this.currentPlayerIndex]);
-            this.logger.log("The category is " + this.currentCategory());
-            this.askQuestion();
+            this.extracted(roll)
         }
+    }
+
+    private extracted(roll: number) {
+        this.places[this.currentPlayerIndex] = this.places[this.currentPlayerIndex] + roll;
+        if (this.places[this.currentPlayerIndex] > 11) {
+            this.places[this.currentPlayerIndex] = this.places[this.currentPlayerIndex] - 12;
+        }
+
+        this.logger.log(this.players[this.currentPlayerIndex] + "'s new location is " + this.places[this.currentPlayerIndex]);
+        this.logger.log("The category is " + this.currentCategory());
+        this.askQuestion();
     }
 
     public wasCorrectlyAnswered(): boolean {
