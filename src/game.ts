@@ -76,6 +76,7 @@ export class Game implements Logger {
             this.purses[this.currentPlayerIndex] + " Gold Coins.");
 
         const didPlayerWin = !(this.purses[this.currentPlayerIndex] == 6);
+
         this.moveToNextPlayer()
 
         return didPlayerWin;
