@@ -94,8 +94,9 @@ export class Game implements Logger {
                 return true;
             }
 
-            this.logger.log('Answer was correct!!!!');
             this.purses[this.currentPlayer] += 1;
+
+            this.logger.log('Answer was correct!!!!');
             this.logger.log(this.players[this.currentPlayer] + " now has " +
                 this.purses[this.currentPlayer] + " Gold Coins.");
 
