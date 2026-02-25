@@ -4,8 +4,7 @@ import {Game} from "./game";
 
 export class GameRunner implements GameMaster {
     public static main(): void {
-        const gameRunner = new GameRunner();
-        gameRunner.runGame();
+        new GameRunner().runGame();
     }
 
     constructor(private readonly gameMaster: GameMaster = this, private readonly logger?: Logger) {
