@@ -88,7 +88,7 @@ export class Game implements Logger {
     private askQuestion(): void {
         if (this.currentCategory() == QuestionCategory.POP)
             this.logger.log(this.popQuestions.shift());
-        if (this.currentCategory() == 'Science')
+        if (this.currentCategory() == QuestionCategory.SCIENCE)
             this.logger.log(this.scienceQuestions.shift());
         if (this.currentCategory() == 'Sports')
             this.logger.log(this.sportsQuestions.shift());
@@ -104,11 +104,11 @@ export class Game implements Logger {
         if (this.places[this.currentPlayer] == 8)
             return QuestionCategory.POP;
         if (this.places[this.currentPlayer] == 1)
-            return 'Science';
+            return QuestionCategory.SCIENCE;
         if (this.places[this.currentPlayer] == 5)
-            return 'Science';
+            return QuestionCategory.SCIENCE;
         if (this.places[this.currentPlayer] == 9)
-            return 'Science';
+            return QuestionCategory.SCIENCE;
         if (this.places[this.currentPlayer] == 2)
             return 'Sports';
         if (this.places[this.currentPlayer] == 6)
