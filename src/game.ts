@@ -59,11 +59,8 @@ export class Game implements Logger {
         this.logger.log(this.playerNames[this.currentPlayerIndex] + "'s new location is " + this.places[this.currentPlayerIndex]);
         this.logger.log("The category is " + this.currentCategory());
 
-        this.askQuestion();
-    }
-
-    private askQuestion(): void {
-        this.logger.log(this.QUESTIONS_BY_CATEGORY[this.currentCategory()].shift());
+        const questionToAsk = this.QUESTIONS_BY_CATEGORY[this.currentCategory()].shift()
+        this.logger.log(questionToAsk);
     }
 
     private currentCategory(): string {
@@ -86,7 +83,7 @@ export class Game implements Logger {
         return CATEGORY_BY_PLACE[this.places[this.currentPlayerIndex]];
     }
 
-    public handleCorrectAnswer(): void{
+    public handleCorrectAnswer(): void {
         if (this.inPenaltyBox[this.currentPlayerIndex] && !this.isGettingOutOfPenaltyBox) {
             this.moveToNextPlayer()
             return;
