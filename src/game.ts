@@ -43,10 +43,13 @@ export class Game implements Logger {
         ].forEach(category => this.createFiftyQuestionsOf(category))
 
         this.playerNames = [...players]
+        this.places = [NaN, ...new Array(players.length).fill(0)]
 
-        players.forEach((player, index) => {
+        players.forEach((_player, index) => {
             const newPlayerIndex = index + 1;
+/*
             this.places[newPlayerIndex] = 0;
+*/
             this.purses[newPlayerIndex] = 0;
             this.inPenaltyBox[newPlayerIndex] = false;
         })
