@@ -34,7 +34,7 @@ export class Game implements Logger {
         [QuestionCategory.ROCK]: this.rockQuestions,
     }
 
-    constructor(players: string[] = [], private readonly logger: Logger = this) {
+    constructor(players: string[], private readonly logger: Logger = this) {
         [
             QuestionCategory.POP,
             QuestionCategory.SCIENCE,
@@ -122,6 +122,7 @@ export class Game implements Logger {
             this.QUESTIONS_BY_CATEGORY[category].push(nameOfQuestionWith(category, i));
         }
     }
+
     private askQuestion(): void {
         this.logger.log(this.QUESTIONS_BY_CATEGORY[this.currentCategory()].shift());
     }
