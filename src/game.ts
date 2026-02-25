@@ -66,10 +66,10 @@ export class Game implements Logger {
         this.logger.log(this.QUESTIONS_BY_CATEGORY[this.currentCategory()].shift());
     }
 
-    public handleCorrectAnswer(): boolean {
+    public handleCorrectAnswer(): void{
         if (this.inPenaltyBox[this.currentPlayerIndex] && !this.isGettingOutOfPenaltyBox) {
             this.moveToNextPlayer()
-            return this.doesNotHaveWinner();
+            return;
         }
 
         this.purses[this.currentPlayerIndex] += 1;
@@ -80,8 +80,6 @@ export class Game implements Logger {
             this.purses[this.currentPlayerIndex] + " Gold Coins.");
 
         this.moveToNextPlayer()
-
-        return this.doesNotHaveWinner();
     }
 
     public doesNotHaveWinner() {
