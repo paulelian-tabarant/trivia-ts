@@ -60,19 +60,19 @@ export class Game implements Logger {
         this.logger.log("They have rolled a " + roll);
 
         if (this.inPenaltyBox[this.currentPlayerIndex]) {
-            if (roll % 2 != 0) {
+            if (roll % 2 == 0) {
+                this.logger.log(this.players[this.currentPlayerIndex] + " is not getting out of the penalty box");
+                this.isGettingOutOfPenaltyBox = false;
+                return;
+            } else {
                 this.isGettingOutOfPenaltyBox = true;
 
                 this.logger.log(this.players[this.currentPlayerIndex] + " is getting out of the penalty box");
-                this.movePlayerAccordingTo(roll);
-            } else {
-                this.logger.log(this.players[this.currentPlayerIndex] + " is not getting out of the penalty box");
-                this.isGettingOutOfPenaltyBox = false;
             }
-        } else {
 
-            this.movePlayerAccordingTo(roll)
         }
+
+        this.movePlayerAccordingTo(roll)
     }
 
     private movePlayerAccordingTo(roll: number) {
