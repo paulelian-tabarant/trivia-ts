@@ -130,12 +130,18 @@ export class Game implements Logger {
     public wrongAnswer(): boolean {
         this.logger.log('Question was incorrectly answered');
         this.logger.log(this.players[this.currentPlayer] + " was sent to the penalty box");
+
         this.inPenaltyBox[this.currentPlayer] = true;
 
+        this.moveToNextPlayer();
+
+        return true;
+    }
+
+    private moveToNextPlayer() {
         this.currentPlayer += 1;
         if (this.currentPlayer == this.players.length)
             this.currentPlayer = 0;
-        return true;
     }
 
     private createFiftyQuestionsOf(category: QuestionCategory) {
