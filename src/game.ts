@@ -38,11 +38,7 @@ export class Game implements Logger {
             QuestionCategory.SCIENCE,
             QuestionCategory.SPORTS,
             QuestionCategory.ROCK,
-        ].forEach(category => {
-            for (let i = 0; i < 50; i++) {
-                this.QUESTIONS_BY_CATEGORY[category].push(nameOfQuestionWith(category, i));
-            }
-        })
+        ].forEach(category => this.createFiftyQuestionsOf(category))
     }
 
     public add(name: string): boolean {
@@ -140,6 +136,12 @@ export class Game implements Logger {
         if (this.currentPlayer == this.players.length)
             this.currentPlayer = 0;
         return true;
+    }
+
+    private createFiftyQuestionsOf(category: QuestionCategory) {
+        for (let i = 0; i < 50; i++) {
+            this.QUESTIONS_BY_CATEGORY[category].push(nameOfQuestionWith(category, i));
+        }
     }
 
     private howManyPlayers(): number {
