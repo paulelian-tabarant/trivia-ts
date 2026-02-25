@@ -43,7 +43,12 @@ export class Game implements Logger {
         ].forEach(category => this.createFiftyQuestionsOf(category))
 
         players.forEach((player) => {
-            this.addNewPlayer(player);
+            this.playerNames.push(player);
+
+            const newPlayerIndex = this.playerNames.length;
+            this.places[newPlayerIndex] = 0;
+            this.purses[newPlayerIndex] = 0;
+            this.inPenaltyBox[newPlayerIndex] = false;
         })
 
         this.players.forEach((name, index) => {
@@ -51,18 +56,6 @@ export class Game implements Logger {
             this.logger.log("They are player number " + (index + 1).toString());
         })
     }
-
-    private addNewPlayer(playerName: string): boolean {
-        this.playerNames.push(playerName);
-
-        const newPlayerIndex = this.playerNames.length;
-        this.places[newPlayerIndex] = 0;
-        this.purses[newPlayerIndex] = 0;
-        this.inPenaltyBox[newPlayerIndex] = false;
-
-        return true;
-    }
-
     public roll(roll: number) {
         const currentPlayerName = this.playerNames[this.currentPlayerIndex];
 
