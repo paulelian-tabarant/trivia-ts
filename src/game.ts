@@ -31,10 +31,6 @@ export class Game implements Logger {
         }
     }
 
-    private createRockQuestion(index: number): string {
-        return "Rock Question " + index;
-    }
-
     public add(name: string): boolean {
         this.players.push(name);
         this.places[this.howManyPlayers()] = 0;
@@ -45,10 +41,6 @@ export class Game implements Logger {
         this.logger.log("They are player number " + this.players.length);
 
         return true;
-    }
-
-    private howManyPlayers(): number {
-        return this.players.length;
     }
 
     public roll(roll: number) {
@@ -83,52 +75,6 @@ export class Game implements Logger {
             this.logger.log("The category is " + this.currentCategory());
             this.askQuestion();
         }
-    }
-
-    private askQuestion(): void {
-        const QUESTIONS_BY_CATEGORY: Record<QuestionCategory, string[]> = {
-            [QuestionCategory.POP]: this.popQuestions,
-            [QuestionCategory.SCIENCE]: this.scienceQuestions,
-            [QuestionCategory.SPORTS]: this.sportsQuestions,
-            [QuestionCategory.ROCK]: this.rockQuestions,
-        }
-
-        this.logger.log(QUESTIONS_BY_CATEGORY[this.currentCategory()].shift());
-    }
-
-    private currentCategory(): string {
-        const CATEGORY_BY_PLACE: Record<number, QuestionCategory | undefined> = {
-            NaN: QuestionCategory.ROCK, // probable bug
-            0: QuestionCategory.POP,
-            1: QuestionCategory.SCIENCE,
-            2: QuestionCategory.SPORTS,
-            3: QuestionCategory.ROCK,
-            4: QuestionCategory.POP,
-            5: QuestionCategory.SCIENCE,
-            6: QuestionCategory.SPORTS,
-            7: QuestionCategory.ROCK,
-            8: QuestionCategory.POP,
-            9: QuestionCategory.SCIENCE,
-            10: QuestionCategory.SPORTS,
-            11: QuestionCategory.ROCK,
-        }
-
-        return CATEGORY_BY_PLACE[this.places[this.currentPlayer]];
-    }
-
-    private didPlayerWin(): boolean {
-        return !(this.purses[this.currentPlayer] == 6)
-    }
-
-    public wrongAnswer(): boolean {
-        this.logger.log('Question was incorrectly answered');
-        this.logger.log(this.players[this.currentPlayer] + " was sent to the penalty box");
-        this.inPenaltyBox[this.currentPlayer] = true;
-
-        this.currentPlayer += 1;
-        if (this.currentPlayer == this.players.length)
-            this.currentPlayer = 0;
-        return true;
     }
 
     public wasCorrectlyAnswered(): boolean {
@@ -169,6 +115,60 @@ export class Game implements Logger {
 
             return winner;
         }
+    }
+
+    public wrongAnswer(): boolean {
+        this.logger.log('Question was incorrectly answered');
+        this.logger.log(this.players[this.currentPlayer] + " was sent to the penalty box");
+        this.inPenaltyBox[this.currentPlayer] = true;
+
+        this.currentPlayer += 1;
+        if (this.currentPlayer == this.players.length)
+            this.currentPlayer = 0;
+        return true;
+    }
+
+    private createRockQuestion(index: number): string {
+        return "Rock Question " + index;
+    }
+
+    private howManyPlayers(): number {
+        return this.players.length;
+    }
+
+    private askQuestion(): void {
+        const QUESTIONS_BY_CATEGORY: Record<QuestionCategory, string[]> = {
+            [QuestionCategory.POP]: this.popQuestions,
+            [QuestionCategory.SCIENCE]: this.scienceQuestions,
+            [QuestionCategory.SPORTS]: this.sportsQuestions,
+            [QuestionCategory.ROCK]: this.rockQuestions,
+        }
+
+        this.logger.log(QUESTIONS_BY_CATEGORY[this.currentCategory()].shift());
+    }
+
+    private currentCategory(): string {
+        const CATEGORY_BY_PLACE: Record<number, QuestionCategory | undefined> = {
+            NaN: QuestionCategory.ROCK, // probable bug
+            0: QuestionCategory.POP,
+            1: QuestionCategory.SCIENCE,
+            2: QuestionCategory.SPORTS,
+            3: QuestionCategory.ROCK,
+            4: QuestionCategory.POP,
+            5: QuestionCategory.SCIENCE,
+            6: QuestionCategory.SPORTS,
+            7: QuestionCategory.ROCK,
+            8: QuestionCategory.POP,
+            9: QuestionCategory.SCIENCE,
+            10: QuestionCategory.SPORTS,
+            11: QuestionCategory.ROCK,
+        }
+
+        return CATEGORY_BY_PLACE[this.places[this.currentPlayer]];
+    }
+
+    private didPlayerWin(): boolean {
+        return !(this.purses[this.currentPlayer] == 6)
     }
 
     public log(message: string) {
