@@ -17,7 +17,7 @@ export class Game implements Logger {
     private places: Array<number> = [];
     private purses: Array<number> = [];
     private inPenaltyBox: Array<boolean> = [];
-    private currentPlayer: number = 0;
+    private currentPlayerIndex: number = 0;
     private isGettingOutOfPenaltyBox: boolean = false;
 
     private popQuestions: Array<string> = [];
@@ -54,59 +54,53 @@ export class Game implements Logger {
     }
 
     public roll(roll: number) {
-        this.logger.log(this.players[this.currentPlayer] + " is the current player");
+        this.logger.log(this.players[this.currentPlayerIndex] + " is the current player");
         this.logger.log("They have rolled a " + roll);
 
-        if (this.inPenaltyBox[this.currentPlayer]) {
+        if (this.inPenaltyBox[this.currentPlayerIndex]) {
             if (roll % 2 != 0) {
                 this.isGettingOutOfPenaltyBox = true;
 
-                this.logger.log(this.players[this.currentPlayer] + " is getting out of the penalty box");
-                this.places[this.currentPlayer] = this.places[this.currentPlayer] + roll;
-                if (this.places[this.currentPlayer] > 11) {
-                    this.places[this.currentPlayer] = this.places[this.currentPlayer] - 12;
+                this.logger.log(this.players[this.currentPlayerIndex] + " is getting out of the penalty box");
+                this.places[this.currentPlayerIndex] = this.places[this.currentPlayerIndex] + roll;
+                if (this.places[this.currentPlayerIndex] > 11) {
+                    this.places[this.currentPlayerIndex] = this.places[this.currentPlayerIndex] - 12;
                 }
 
-                this.logger.log(this.players[this.currentPlayer] + "'s new location is " + this.places[this.currentPlayer]);
+                this.logger.log(this.players[this.currentPlayerIndex] + "'s new location is " + this.places[this.currentPlayerIndex]);
                 this.logger.log("The category is " + this.currentCategory());
                 this.askQuestion();
             } else {
-                this.logger.log(this.players[this.currentPlayer] + " is not getting out of the penalty box");
+                this.logger.log(this.players[this.currentPlayerIndex] + " is not getting out of the penalty box");
                 this.isGettingOutOfPenaltyBox = false;
             }
         } else {
 
-            this.places[this.currentPlayer] = this.places[this.currentPlayer] + roll;
-            if (this.places[this.currentPlayer] > 11) {
-                this.places[this.currentPlayer] = this.places[this.currentPlayer] - 12;
+            this.places[this.currentPlayerIndex] = this.places[this.currentPlayerIndex] + roll;
+            if (this.places[this.currentPlayerIndex] > 11) {
+                this.places[this.currentPlayerIndex] = this.places[this.currentPlayerIndex] - 12;
             }
 
-            this.logger.log(this.players[this.currentPlayer] + "'s new location is " + this.places[this.currentPlayer]);
+            this.logger.log(this.players[this.currentPlayerIndex] + "'s new location is " + this.places[this.currentPlayerIndex]);
             this.logger.log("The category is " + this.currentCategory());
             this.askQuestion();
         }
     }
 
     public wasCorrectlyAnswered(): boolean {
-        if (this.inPenaltyBox[this.currentPlayer]) {
-            if (!this.isGettingOutOfPenaltyBox) {
-                this.moveToNextPlayer()
-                return true;
-            }
-        } else {
+        if (this.inPenaltyBox[this.currentPlayerIndex] && !this.isGettingOutOfPenaltyBox) {
+            this.moveToNextPlayer()
+            return true;
         }
 
-        const message = this.inPenaltyBox[this.currentPlayer] && this.isGettingOutOfPenaltyBox ?
-            'Answer was correct!!!!' : 'Answer was corrent!!!!'
+        this.purses[this.currentPlayerIndex] += 1;
 
-        this.purses[this.currentPlayer] += 1;
+        this.logger.log(this.inPenaltyBox[this.currentPlayerIndex] && this.isGettingOutOfPenaltyBox ?
+            'Answer was correct!!!!' : 'Answer was corrent!!!!');
+        this.logger.log(this.players[this.currentPlayerIndex] + " now has " +
+            this.purses[this.currentPlayerIndex] + " Gold Coins.");
 
-        this.logger.log(message);
-        this.logger.log(this.players[this.currentPlayer] + " now has " +
-            this.purses[this.currentPlayer] + " Gold Coins.");
-
-        const didPlayerWin = !(this.purses[this.currentPlayer] == 6);
-
+        const didPlayerWin = !(this.purses[this.currentPlayerIndex] == 6);
         this.moveToNextPlayer()
 
         return didPlayerWin;
@@ -114,9 +108,9 @@ export class Game implements Logger {
 
     public wrongAnswer(): boolean {
         this.logger.log('Question was incorrectly answered');
-        this.logger.log(this.players[this.currentPlayer] + " was sent to the penalty box");
+        this.logger.log(this.players[this.currentPlayerIndex] + " was sent to the penalty box");
 
-        this.inPenaltyBox[this.currentPlayer] = true;
+        this.inPenaltyBox[this.currentPlayerIndex] = true;
 
         this.moveToNextPlayer();
 
@@ -124,9 +118,9 @@ export class Game implements Logger {
     }
 
     private moveToNextPlayer() {
-        this.currentPlayer += 1;
-        if (this.currentPlayer == this.players.length)
-            this.currentPlayer = 0;
+        this.currentPlayerIndex += 1;
+        if (this.currentPlayerIndex == this.players.length)
+            this.currentPlayerIndex = 0;
     }
 
     private createFiftyQuestionsOf(category: QuestionCategory) {
@@ -160,11 +154,11 @@ export class Game implements Logger {
             11: QuestionCategory.ROCK,
         }
 
-        return CATEGORY_BY_PLACE[this.places[this.currentPlayer]];
+        return CATEGORY_BY_PLACE[this.places[this.currentPlayerIndex]];
     }
 
     private didCurrentPlayerWin(): boolean {
-        return !(this.purses[this.currentPlayer] == 6)
+        return !(this.purses[this.currentPlayerIndex] == 6)
     }
 
     public log(message: string) {
