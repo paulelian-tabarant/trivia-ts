@@ -106,20 +106,19 @@ export class Game implements Logger {
             return winner;
 
 
-        } else {
-
-            this.logger.log("Answer was corrent!!!!");
-
-            this.purses[this.currentPlayer] += 1;
-            this.logger.log(this.players[this.currentPlayer] + " now has " +
-                this.purses[this.currentPlayer] + " Gold Coins.");
-
-            var winner = this.didCurrentPlayerWin();
-
-            this.moveToNextPlayer()
-
-            return winner;
         }
+
+        this.logger.log("Answer was corrent!!!!");
+
+        this.purses[this.currentPlayer] += 1;
+        this.logger.log(this.players[this.currentPlayer] + " now has " +
+            this.purses[this.currentPlayer] + " Gold Coins.");
+
+        var winner = this.didCurrentPlayerWin();
+
+        this.moveToNextPlayer()
+
+        return winner;
     }
 
     public wrongAnswer(): boolean {
