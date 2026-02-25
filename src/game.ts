@@ -86,15 +86,13 @@ export class Game implements Logger {
         return !(this.purses.some(p => p == 6));
     }
 
-    public handleWrongAnswer(): boolean {
+    public handleWrongAnswer(): void {
         this.logger.log('Question was incorrectly answered');
         this.logger.log(this.playerNames[this.currentPlayerIndex] + " was sent to the penalty box");
 
         this.inPenaltyBox[this.currentPlayerIndex] = true;
 
         this.moveToNextPlayer();
-
-        return true;
     }
 
     private moveToNextPlayer() {
