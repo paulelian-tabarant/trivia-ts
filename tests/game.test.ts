@@ -7,7 +7,7 @@ describe('The test environment', () => {
     it("should behave as the original game runner", function () {
         let currentRoll = 0;
         const gameMasterStub: GameMaster = {
-            getNextRoll: (): number => {
+            rollDice: (): number => {
                 currentRoll = currentRoll >= 20 ? 0 : currentRoll + 1;
                 return currentRoll;
             },

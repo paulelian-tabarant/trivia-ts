@@ -1,4 +1,4 @@
 export interface GameMaster {
-    getNextRoll(): number
+    rollDice(): number
     isWrongAnswer(): boolean
 }

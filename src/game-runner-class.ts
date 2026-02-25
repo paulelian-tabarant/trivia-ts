@@ -16,8 +16,8 @@ export class GameRunner implements GameMaster {
         const game = new Game(players, this.logger);
 
         do {
-
-            game.playCurrentPlayerTurn(this.gameMaster.getNextRoll());
+            const roll = this.gameMaster.rollDice();
+            game.playCurrentPlayerTurn(roll);
 
             if (this.gameMaster.isWrongAnswer()) {
                 game.handleWrongAnswerFromCurrentPlayer();
@@ -28,7 +28,7 @@ export class GameRunner implements GameMaster {
         } while (game.doesNotHaveWinner());
     }
 
-    getNextRoll() {
+    rollDice() {
         return Math.floor(Math.random() * 6) + 1;
     }
 
