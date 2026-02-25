@@ -7,13 +7,11 @@ describe('The test environment', () => {
     it("should behave as the original game runner", function () {
         let currentRoll = 0;
         const gameMasterStub: GameMaster = {
-            getNextRoll: function (): number {
+            getNextRoll: (): number => {
                 currentRoll = currentRoll >= 20 ? 0 : currentRoll + 1;
                 return currentRoll;
             },
-            isWrongAnswer: function (): boolean {
-                return currentRoll % 5 === 0;
-            }
+            isWrongAnswer: (): boolean => currentRoll % 5 === 0
         }
 
         const capturedOutput = []
