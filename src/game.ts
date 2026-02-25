@@ -4,7 +4,7 @@ enum QuestionCategory {
     POP = 'Pop',
     SCIENCE = 'Science',
     SPORTS = 'Sports',
-    ROCK = "Rock",
+    ROCK = 'Rock',
 }
 
 export class Game implements Logger {
@@ -92,7 +92,7 @@ export class Game implements Logger {
             this.logger.log(this.scienceQuestions.shift());
         if (this.currentCategory() == QuestionCategory.SPORTS)
             this.logger.log(this.sportsQuestions.shift());
-        if (this.currentCategory() == 'Rock')
+        if (this.currentCategory() == QuestionCategory.ROCK)
             this.logger.log(this.rockQuestions.shift());
     }
 
@@ -115,7 +115,7 @@ export class Game implements Logger {
             return QuestionCategory.SPORTS;
         if (this.places[this.currentPlayer] == 10)
             return QuestionCategory.SPORTS;
-        return 'Rock';
+        return QuestionCategory.ROCK;
     }
 
     private didPlayerWin(): boolean {
