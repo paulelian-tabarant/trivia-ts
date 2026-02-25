@@ -43,14 +43,16 @@ export class Game implements Logger {
         ].forEach(category => this.createFiftyQuestionsOf(category))
     }
 
-    public add(name: string): boolean {
-        this.playerNames.push(name);
-        this.places[this.howManyPlayers()] = 0;
-        this.purses[this.howManyPlayers()] = 0;
-        this.inPenaltyBox[this.howManyPlayers()] = false;
+    public addNewPlayer(playerName: string): boolean {
+        this.playerNames.push(playerName);
 
-        this.logger.log(name + " was added");
-        this.logger.log("They are player number " + this.playerNames.length);
+        const newPlayerIndex = this.playerNames.length;
+        this.places[newPlayerIndex] = 0;
+        this.purses[newPlayerIndex] = 0;
+        this.inPenaltyBox[newPlayerIndex] = false;
+
+        this.logger.log(playerName + " was added");
+        this.logger.log("They are player number " + newPlayerIndex);
 
         return true;
     }
@@ -125,11 +127,6 @@ export class Game implements Logger {
             this.QUESTIONS_BY_CATEGORY[category].push(nameOfQuestionWith(category, i));
         }
     }
-
-    private howManyPlayers(): number {
-        return this.playerNames.length;
-    }
-
     private askQuestion(): void {
         this.logger.log(this.QUESTIONS_BY_CATEGORY[this.currentCategory()].shift());
     }

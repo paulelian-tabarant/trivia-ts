@@ -13,9 +13,9 @@ export class GameRunner implements GameMaster {
 
     public runGame() {
         const game = new Game(this.logger);
-        game.add("Chet");
-        game.add("Pat");
-        game.add("Sue");
+        game.addNewPlayer("Chet");
+        game.addNewPlayer("Pat");
+        game.addNewPlayer("Sue");
 
         let notAWinner;
         do {
