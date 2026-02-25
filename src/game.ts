@@ -152,10 +152,6 @@ export class Game implements Logger {
         return CATEGORY_BY_PLACE[this.places[this.currentPlayerIndex]];
     }
 
-    private didCurrentPlayerWin(): boolean {
-        return !(this.purses[this.currentPlayerIndex] == 6)
-    }
-
     public log(message: string) {
         console.log(message);
     }
