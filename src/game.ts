@@ -138,14 +138,14 @@ export class Game implements Logger {
     }
 
     private askQuestion(): void {
-        const QUESTIONS_BY_CATEGORY: Record<QuestionCategory, string[]> = {
-            [QuestionCategory.POP]: this.popQuestions,
-            [QuestionCategory.SCIENCE]: this.scienceQuestions,
-            [QuestionCategory.SPORTS]: this.sportsQuestions,
-            [QuestionCategory.ROCK]: this.rockQuestions,
-        }
+        this.logger.log(this.QUESTIONS_BY_CATEGORY[this.currentCategory()].shift());
+    }
 
-        this.logger.log(QUESTIONS_BY_CATEGORY[this.currentCategory()].shift());
+    private QUESTIONS_BY_CATEGORY: Record<QuestionCategory, string[]> = {
+        [QuestionCategory.POP]: this.popQuestions,
+        [QuestionCategory.SCIENCE]: this.scienceQuestions,
+        [QuestionCategory.SPORTS]: this.sportsQuestions,
+        [QuestionCategory.ROCK]: this.rockQuestions,
     }
 
     private currentCategory(): string {
