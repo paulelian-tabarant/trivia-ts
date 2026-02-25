@@ -96,15 +96,11 @@ export class Game implements Logger {
                     this.purses[this.currentPlayer] + " Gold Coins.");
 
                 var winner = this.didPlayerWin();
-                this.currentPlayer += 1;
-                if (this.currentPlayer == this.players.length)
-                    this.currentPlayer = 0;
+                this.moveToNextPlayer()
 
                 return winner;
             } else {
-                this.currentPlayer += 1;
-                if (this.currentPlayer == this.players.length)
-                    this.currentPlayer = 0;
+                this.moveToNextPlayer()
                 return true;
             }
 
