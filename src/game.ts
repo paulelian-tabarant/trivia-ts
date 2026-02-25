@@ -3,7 +3,7 @@ import {Logger} from "./logger";
 enum QuestionCategory {
     POP = 'Pop',
     SCIENCE = 'Science',
-    SPORTS = "Sports",
+    SPORTS = 'Sports',
     ROCK = "Rock",
 }
 
@@ -90,7 +90,7 @@ export class Game implements Logger {
             this.logger.log(this.popQuestions.shift());
         if (this.currentCategory() == QuestionCategory.SCIENCE)
             this.logger.log(this.scienceQuestions.shift());
-        if (this.currentCategory() == 'Sports')
+        if (this.currentCategory() == QuestionCategory.SPORTS)
             this.logger.log(this.sportsQuestions.shift());
         if (this.currentCategory() == 'Rock')
             this.logger.log(this.rockQuestions.shift());
@@ -110,11 +110,11 @@ export class Game implements Logger {
         if (this.places[this.currentPlayer] == 9)
             return QuestionCategory.SCIENCE;
         if (this.places[this.currentPlayer] == 2)
-            return 'Sports';
+            return QuestionCategory.SPORTS;
         if (this.places[this.currentPlayer] == 6)
-            return 'Sports';
+            return QuestionCategory.SPORTS;
         if (this.places[this.currentPlayer] == 10)
-            return 'Sports';
+            return QuestionCategory.SPORTS;
         return 'Rock';
     }
 
