@@ -88,17 +88,16 @@ export class Game implements Logger {
     }
 
     public wasCorrectlyAnswered(): boolean {
-        let message
         if (this.inPenaltyBox[this.currentPlayer]) {
             if (!this.isGettingOutOfPenaltyBox) {
                 this.moveToNextPlayer()
                 return true;
             }
-
-            message = 'Answer was correct!!!!'
         } else {
-            message = 'Answer was corrent!!!!';
         }
+
+        const message = this.inPenaltyBox[this.currentPlayer] && this.isGettingOutOfPenaltyBox ?
+            'Answer was correct!!!!' : 'Answer was corrent!!!!'
 
         this.purses[this.currentPlayer] += 1;
 
