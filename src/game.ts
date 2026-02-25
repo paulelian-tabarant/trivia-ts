@@ -7,6 +7,12 @@ enum QuestionCategory {
     ROCK = 'Rock',
 }
 
+function createFiftyQuestionsOf(category: QuestionCategory) {
+    return [...(new Array(50))].map(
+        (_, index) => nameOfQuestionWith(category, index)
+    );
+}
+
 function nameOfQuestionWith(questionCategory: QuestionCategory, questionNumber: number) {
     return `${questionCategory} Question ${questionNumber}`;
 }
@@ -54,9 +60,7 @@ export class Game implements Logger {
     }
 
     private createFiftyQuestionsOf(category: QuestionCategory) {
-        this.QUESTIONS_BY_CATEGORY[category] = [...(new Array(50))].map(
-            (_, index) => nameOfQuestionWith(category, index)
-        );
+        this.QUESTIONS_BY_CATEGORY[category] = createFiftyQuestionsOf(category)
     }
 
     public roll(roll: number) {
