@@ -99,13 +99,13 @@ export class Game implements Logger {
     private currentCategory(): string {
         const CATEGORY_BY_PLACE: Record<number, QuestionCategory | undefined> = {
             0: QuestionCategory.POP,
-            4: QuestionCategory.POP,
-            8: QuestionCategory.POP,
             1: QuestionCategory.SCIENCE,
-            5: QuestionCategory.SCIENCE,
-            9: QuestionCategory.SCIENCE,
             2: QuestionCategory.SPORTS,
+            4: QuestionCategory.POP,
+            5: QuestionCategory.SCIENCE,
             6: QuestionCategory.SPORTS,
+            8: QuestionCategory.POP,
+            9: QuestionCategory.SCIENCE,
             10: QuestionCategory.SPORTS,
         }
 
