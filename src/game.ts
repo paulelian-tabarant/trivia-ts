@@ -45,11 +45,7 @@ export class Game implements Logger {
         this.playerNames = [...players]
         this.places = [NaN, ...new Array(players.length).fill(0)]
         this.purses = [NaN, ...new Array(players.length).fill(0)]
-
-        players.forEach((_player, index) => {
-            const newPlayerIndex = index + 1;
-            this.inPenaltyBox[newPlayerIndex] = false;
-        })
+        this.inPenaltyBox = [NaN, ...new Array(players.length).fill(false)]
 
         this.playerNames.forEach((name, index) => {
             this.logger.log(name + " was added");
