@@ -97,24 +97,22 @@ export class Game implements Logger {
     }
 
     private currentCategory(): string {
-        if (this.places[this.currentPlayer] == 0)
-            return QuestionCategory.POP;
-        if (this.places[this.currentPlayer] == 4)
-            return QuestionCategory.POP;
-        if (this.places[this.currentPlayer] == 8)
-            return QuestionCategory.POP;
-        if (this.places[this.currentPlayer] == 1)
-            return QuestionCategory.SCIENCE;
-        if (this.places[this.currentPlayer] == 5)
-            return QuestionCategory.SCIENCE;
-        if (this.places[this.currentPlayer] == 9)
-            return QuestionCategory.SCIENCE;
-        if (this.places[this.currentPlayer] == 2)
-            return QuestionCategory.SPORTS;
-        if (this.places[this.currentPlayer] == 6)
-            return QuestionCategory.SPORTS;
-        if (this.places[this.currentPlayer] == 10)
-            return QuestionCategory.SPORTS;
+        const CATEGORY_BY_PLACE: Record<number, QuestionCategory | undefined> = {
+            0: QuestionCategory.POP,
+            4: QuestionCategory.POP,
+            8: QuestionCategory.POP,
+            1: QuestionCategory.SCIENCE,
+            5: QuestionCategory.SCIENCE,
+            9: QuestionCategory.SCIENCE,
+            2: QuestionCategory.SPORTS,
+            6: QuestionCategory.SPORTS,
+            10: QuestionCategory.SPORTS,
+        }
+
+        if (CATEGORY_BY_PLACE[this.places[this.currentPlayer]]) {
+            return CATEGORY_BY_PLACE[this.places[this.currentPlayer]];
+        }
+
         return QuestionCategory.ROCK;
     }
 
