@@ -119,9 +119,7 @@ export class Game implements Logger {
 
             var winner = this.didPlayerWin();
 
-            this.currentPlayer += 1;
-            if (this.currentPlayer == this.players.length)
-                this.currentPlayer = 0;
+            this.moveToNextPlayer()
 
             return winner;
         }
