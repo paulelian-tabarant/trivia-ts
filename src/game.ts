@@ -24,11 +24,16 @@ export class Game implements Logger {
     constructor(private readonly logger: Logger = this) {
 
         for (let i = 0; i < 50; i++) {
-            this.popQuestions.push("Pop Question " + i);
+            const questionCategory = QuestionCategory.POP
+            this.popQuestions.push(this.getItems(questionCategory, i));
             this.scienceQuestions.push("Science Question " + i);
             this.sportsQuestions.push("Sports Question " + i);
-            this.rockQuestions.push(this.createRockQuestion(i));
+            this.rockQuestions.push("Rock Question " + i);
         }
+    }
+
+    private getItems(questionCategory: QuestionCategory.POP, i: number) {
+        return `${questionCategory} Question ${i}`;
     }
 
     public add(name: string): boolean {
