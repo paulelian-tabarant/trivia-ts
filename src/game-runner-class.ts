@@ -30,7 +30,7 @@ export class GameRunner implements GameMaster {
                 notAWinner = game.handleWrongAnswerFromCurrentPlayer();
             } else {
                 game.handleCorrectAnswerFromCurrentPlayer();
-                notAWinner = game.didPlayerWin();
+                notAWinner = game.doesNotHaveWinner();
             }
 
         } while (notAWinner);

@@ -69,7 +69,7 @@ export class Game implements Logger {
     public handleCorrectAnswerFromCurrentPlayer(): boolean {
         if (this.inPenaltyBox[this.currentPlayerIndex] && !this.isGettingOutOfPenaltyBox) {
             this.moveToNextPlayer()
-            return this.didPlayerWin();
+            return this.doesNotHaveWinner();
         }
 
         this.purses[this.currentPlayerIndex] += 1;
@@ -81,10 +81,10 @@ export class Game implements Logger {
 
         this.moveToNextPlayer()
 
-        return this.didPlayerWin();
+        return this.doesNotHaveWinner();
     }
 
-    public didPlayerWin() {
+    public doesNotHaveWinner() {
         return !(this.purses.some(p => p == 6));
     }
 
