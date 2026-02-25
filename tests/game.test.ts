@@ -11,7 +11,7 @@ describe('The test environment', () => {
                 currentRoll = currentRoll >= 20 ? 0 : currentRoll + 1;
                 return currentRoll;
             },
-            isCorrectAnswer: (): boolean => currentRoll % 5 !== 0
+            gotCorrectAnswer: (): boolean => currentRoll % 5 !== 0
         }
 
         const capturedOutput = []

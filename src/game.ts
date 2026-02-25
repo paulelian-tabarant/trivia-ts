@@ -66,7 +66,7 @@ export class Game implements Logger {
         this.logger.log(this.QUESTIONS_BY_CATEGORY[this.currentCategory()].shift());
     }
 
-    public handleCorrectAnswerFromCurrentPlayer(): boolean {
+    public handleCorrectAnswer(): boolean {
         if (this.inPenaltyBox[this.currentPlayerIndex] && !this.isGettingOutOfPenaltyBox) {
             this.moveToNextPlayer()
             return this.doesNotHaveWinner();
@@ -88,7 +88,7 @@ export class Game implements Logger {
         return !(this.purses.some(p => p == 6));
     }
 
-    public handleWrongAnswerFromCurrentPlayer(): boolean {
+    public handleWrongAnswer(): boolean {
         this.logger.log('Question was incorrectly answered');
         this.logger.log(this.playerNames[this.currentPlayerIndex] + " was sent to the penalty box");
 
