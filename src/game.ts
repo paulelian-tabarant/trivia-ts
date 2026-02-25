@@ -7,8 +7,8 @@ enum QuestionCategory {
     ROCK = 'Rock',
 }
 
-function buildQuestionNameFrom(questionCategory: QuestionCategory, i: number) {
-    return `${questionCategory} Question ${i}`;
+function nameOfQuestionWith(questionCategory: QuestionCategory, questionNumber: number) {
+    return `${questionCategory} Question ${questionNumber}`;
 }
 
 export class Game implements Logger {
@@ -25,18 +25,24 @@ export class Game implements Logger {
     private sportsQuestions: Array<string> = [];
     private rockQuestions: Array<string> = [];
 
+    private QUESTIONS_BY_CATEGORY: Record<QuestionCategory, string[]> = {
+        [QuestionCategory.POP]: this.popQuestions,
+        [QuestionCategory.SCIENCE]: this.scienceQuestions,
+        [QuestionCategory.SPORTS]: this.sportsQuestions,
+        [QuestionCategory.ROCK]: this.rockQuestions,
+    }
+
     constructor(private readonly logger: Logger = this) {
         [
             QuestionCategory.POP,
             QuestionCategory.SCIENCE,
             QuestionCategory.SPORTS,
             QuestionCategory.ROCK,
-        ]
-            .forEach(category => {
-                for (let i = 0; i < 50; i++) {
-                    this.QUESTIONS_BY_CATEGORY[category].push(buildQuestionNameFrom(category, i));
-                }
-            })
+        ].forEach(category => {
+            for (let i = 0; i < 50; i++) {
+                this.QUESTIONS_BY_CATEGORY[category].push(nameOfQuestionWith(category, i));
+            }
+        })
     }
 
     public add(name: string): boolean {
@@ -142,13 +148,6 @@ export class Game implements Logger {
 
     private askQuestion(): void {
         this.logger.log(this.QUESTIONS_BY_CATEGORY[this.currentCategory()].shift());
-    }
-
-    private QUESTIONS_BY_CATEGORY: Record<QuestionCategory, string[]> = {
-        [QuestionCategory.POP]: this.popQuestions,
-        [QuestionCategory.SCIENCE]: this.scienceQuestions,
-        [QuestionCategory.SPORTS]: this.sportsQuestions,
-        [QuestionCategory.ROCK]: this.rockQuestions,
     }
 
     private currentCategory(): string {
