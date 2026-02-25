@@ -36,7 +36,7 @@ export class Game implements Logger {
         })
     }
 
-    public roll(roll: number) {
+    public playCurrentPlayerTurn(roll: number) {
         const currentPlayerName = this.playerNames[this.currentPlayerIndex];
 
         this.logger.log(currentPlayerName + " is the current player");
@@ -53,15 +53,12 @@ export class Game implements Logger {
             this.logger.log(currentPlayerName + " is getting out of the penalty box");
         }
 
-        this.movePlayerAccordingTo(roll)
-    }
-
-    private movePlayerAccordingTo(roll: number) {
         this.places[this.currentPlayerIndex] += roll;
         this.places[this.currentPlayerIndex] %= BOARD_SIZE
 
         this.logger.log(this.playerNames[this.currentPlayerIndex] + "'s new location is " + this.places[this.currentPlayerIndex]);
         this.logger.log("The category is " + this.currentCategory());
+
         this.askQuestion();
     }
 

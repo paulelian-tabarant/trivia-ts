@@ -24,7 +24,7 @@ export class GameRunner implements GameMaster {
         let notAWinner;
         do {
 
-            game.roll(this.gameMaster.getNextRoll());
+            game.playCurrentPlayerTurn(this.gameMaster.getNextRoll());
 
             if (this.gameMaster.isWrongAnswer()) {
                 notAWinner = game.wrongAnswer();
