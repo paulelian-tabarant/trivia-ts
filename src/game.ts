@@ -95,7 +95,7 @@ export class Game implements Logger {
                 this.logger.log(this.players[this.currentPlayer] + " now has " +
                     this.purses[this.currentPlayer] + " Gold Coins.");
 
-                var winner = this.didPlayerWin();
+                var winner = this.didCurrentPlayerWin();
                 this.moveToNextPlayer()
 
                 return winner;
@@ -113,7 +113,7 @@ export class Game implements Logger {
             this.logger.log(this.players[this.currentPlayer] + " now has " +
                 this.purses[this.currentPlayer] + " Gold Coins.");
 
-            var winner = this.didPlayerWin();
+            var winner = this.didCurrentPlayerWin();
 
             this.moveToNextPlayer()
 
@@ -172,7 +172,7 @@ export class Game implements Logger {
         return CATEGORY_BY_PLACE[this.places[this.currentPlayer]];
     }
 
-    private didPlayerWin(): boolean {
+    private didCurrentPlayerWin(): boolean {
         return !(this.purses[this.currentPlayer] == 6)
     }
 
