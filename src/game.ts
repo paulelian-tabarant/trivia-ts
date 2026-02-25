@@ -44,13 +44,10 @@ export class Game implements Logger {
 
         this.playerNames = [...players]
         this.places = [NaN, ...new Array(players.length).fill(0)]
+        this.purses = [NaN, ...new Array(players.length).fill(0)]
 
         players.forEach((_player, index) => {
             const newPlayerIndex = index + 1;
-/*
-            this.places[newPlayerIndex] = 0;
-*/
-            this.purses[newPlayerIndex] = 0;
             this.inPenaltyBox[newPlayerIndex] = false;
         })
 
