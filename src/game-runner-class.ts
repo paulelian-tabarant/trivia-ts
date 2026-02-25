@@ -19,10 +19,10 @@ export class GameRunner implements GameMaster {
             const roll = this.gameMaster.rollDice();
             game.playCurrentPlayerTurn(roll);
 
-            if (this.gameMaster.isWrongAnswer()) {
-                game.handleWrongAnswerFromCurrentPlayer();
-            } else {
+            if (this.gameMaster.isCorrectAnswer()) {
                 game.handleCorrectAnswerFromCurrentPlayer();
+            } else {
+                game.handleWrongAnswerFromCurrentPlayer();
             }
 
         } while (game.doesNotHaveWinner());
@@ -32,7 +32,7 @@ export class GameRunner implements GameMaster {
         return Math.floor(Math.random() * 6) + 1;
     }
 
-    isWrongAnswer() {
-        return Math.floor(Math.random() * 10) == 7;
+    isCorrectAnswer() {
+        return Math.floor(Math.random() * 10) != 7;
     }
 }
