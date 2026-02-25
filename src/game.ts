@@ -98,6 +98,7 @@ export class Game implements Logger {
 
     private currentCategory(): string {
         const CATEGORY_BY_PLACE: Record<number, QuestionCategory | undefined> = {
+            NaN: QuestionCategory.ROCK, // probable bug
             0: QuestionCategory.POP,
             1: QuestionCategory.SCIENCE,
             2: QuestionCategory.SPORTS,
@@ -112,11 +113,7 @@ export class Game implements Logger {
             11: QuestionCategory.ROCK,
         }
 
-        if (CATEGORY_BY_PLACE[this.places[this.currentPlayer]]) {
-            return CATEGORY_BY_PLACE[this.places[this.currentPlayer]];
-        }
-
-        return QuestionCategory.ROCK;
+        return CATEGORY_BY_PLACE[this.places[this.currentPlayer]];
     }
 
     private didPlayerWin(): boolean {
