@@ -59,11 +59,6 @@ export class Game implements Logger {
         this.places[newPlayerIndex] = 0;
         this.purses[newPlayerIndex] = 0;
         this.inPenaltyBox[newPlayerIndex] = false;
-/*
-
-        this.logger.log(playerName + " was added");
-        this.logger.log("They are player number " + newPlayerIndex);
-*/
 
         return true;
     }
