@@ -12,10 +12,14 @@ export class GameRunner implements GameMaster {
     }
 
     public runGame() {
-        const game = new Game(this.logger);
+        const game = new Game([
+            "Chet", "Pat", "Sue"
+        ], this.logger);
+/*
         game.addNewPlayer("Chet");
         game.addNewPlayer("Pat");
         game.addNewPlayer("Sue");
+*/
 
         let notAWinner;
         do {

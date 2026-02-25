@@ -34,13 +34,17 @@ export class Game implements Logger {
         [QuestionCategory.ROCK]: this.rockQuestions,
     }
 
-    constructor(private readonly logger: Logger = this) {
+    constructor(private players: string[] = [], private readonly logger: Logger = this) {
         [
             QuestionCategory.POP,
             QuestionCategory.SCIENCE,
             QuestionCategory.SPORTS,
             QuestionCategory.ROCK,
         ].forEach(category => this.createFiftyQuestionsOf(category))
+
+        players.forEach((player) => {
+            this.addNewPlayer(player);
+        })
     }
 
     public addNewPlayer(playerName: string): boolean {
