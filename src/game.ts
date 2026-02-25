@@ -81,6 +81,10 @@ export class Game implements Logger {
 
         this.moveToNextPlayer()
 
+        return this.didPlayerWin();
+    }
+
+    private didPlayerWin() {
         return !(this.purses.some(p => p == 6));
     }
 
