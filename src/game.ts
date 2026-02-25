@@ -57,6 +57,7 @@ export class Game implements Logger {
 
     public roll(roll: number) {
         const currentPlayerName = this.playerNames[this.currentPlayerIndex];
+
         this.logger.log(currentPlayerName + " is the current player");
         this.logger.log("They have rolled a " + roll);
 
