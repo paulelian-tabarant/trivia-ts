@@ -81,7 +81,7 @@ export class Game implements Logger {
         return didPlayerWin;
     }
 
-    public wrongAnswer(): boolean {
+    public handleWrongAnswerFromCurrentPlayer(): boolean {
         this.logger.log('Question was incorrectly answered');
         this.logger.log(this.playerNames[this.currentPlayerIndex] + " was sent to the penalty box");
 

@@ -27,7 +27,7 @@ export class GameRunner implements GameMaster {
             game.playCurrentPlayerTurn(this.gameMaster.getNextRoll());
 
             if (this.gameMaster.isWrongAnswer()) {
-                notAWinner = game.wrongAnswer();
+                notAWinner = game.handleWrongAnswerFromCurrentPlayer();
             } else {
                 notAWinner = game.handleCorrectAnswerFromCurrentPlayer();
             }
