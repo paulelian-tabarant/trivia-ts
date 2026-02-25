@@ -12,16 +12,11 @@ export class Game implements Logger {
     private currentPlayerIndex: number = 0;
     private isGettingOutOfPenaltyBox: boolean = false;
 
-    private popQuestions: Array<string> = [];
-    private scienceQuestions: Array<string> = [];
-    private sportsQuestions: Array<string> = [];
-    private rockQuestions: Array<string> = [];
-
     private QUESTIONS_BY_CATEGORY: Record<QuestionCategory, string[]> = {
-        [QuestionCategory.POP]: this.popQuestions,
-        [QuestionCategory.SCIENCE]: this.scienceQuestions,
-        [QuestionCategory.SPORTS]: this.sportsQuestions,
-        [QuestionCategory.ROCK]: this.rockQuestions,
+        [QuestionCategory.POP]: [],
+        [QuestionCategory.SCIENCE]: [],
+        [QuestionCategory.SPORTS]: [],
+        [QuestionCategory.ROCK]: [],
     }
 
     constructor(players: string[], private readonly logger: Logger = this) {
