@@ -24,7 +24,7 @@ export class Game implements Logger {
             this.QUESTIONS_BY_CATEGORY[category] = createFiftyQuestionsOf(category);
         })
 
-        // TODO: NaN is very likely to be a bug
+        // FIXME: NaN is very likely to be a bug
         this.playerNames = [...players]
         this.places = [NaN, ...new Array(players.length).fill(0)]
         this.purses = [NaN, ...new Array(players.length).fill(0)]
@@ -66,41 +66,6 @@ export class Game implements Logger {
         this.logger.log(this.QUESTIONS_BY_CATEGORY[this.currentCategory()].shift());
     }
 
-    public handleCorrectAnswer(): void{
-        if (this.inPenaltyBox[this.currentPlayerIndex] && !this.isGettingOutOfPenaltyBox) {
-            this.moveToNextPlayer()
-            return;
-        }
-
-        this.purses[this.currentPlayerIndex] += 1;
-
-        this.logger.log(this.inPenaltyBox[this.currentPlayerIndex] && this.isGettingOutOfPenaltyBox ?
-            'Answer was correct!!!!' : 'Answer was corrent!!!!');
-        this.logger.log(this.playerNames[this.currentPlayerIndex] + " now has " +
-            this.purses[this.currentPlayerIndex] + " Gold Coins.");
-
-        this.moveToNextPlayer()
-    }
-
-    public doesNotHaveWinner() {
-        return !(this.purses.some(p => p == 6));
-    }
-
-    public handleWrongAnswer(): void {
-        this.logger.log('Question was incorrectly answered');
-        this.logger.log(this.playerNames[this.currentPlayerIndex] + " was sent to the penalty box");
-
-        this.inPenaltyBox[this.currentPlayerIndex] = true;
-
-        this.moveToNextPlayer();
-    }
-
-    private moveToNextPlayer() {
-        this.currentPlayerIndex += 1;
-        if (this.currentPlayerIndex == this.playerNames.length)
-            this.currentPlayerIndex = 0;
-    }
-
     private currentCategory(): string {
         const CATEGORY_BY_PLACE: Record<number, QuestionCategory | undefined> = {
             NaN: QuestionCategory.ROCK, // probable bug
@@ -119,6 +84,42 @@ export class Game implements Logger {
         }
 
         return CATEGORY_BY_PLACE[this.places[this.currentPlayerIndex]];
+    }
+
+    public handleCorrectAnswer(): void{
+        if (this.inPenaltyBox[this.currentPlayerIndex] && !this.isGettingOutOfPenaltyBox) {
+            this.moveToNextPlayer()
+            return;
+        }
+
+        this.purses[this.currentPlayerIndex] += 1;
+
+        // FIXME: 'corrent' is very likely to be a typo
+        this.logger.log(this.inPenaltyBox[this.currentPlayerIndex] && this.isGettingOutOfPenaltyBox ?
+            'Answer was correct!!!!' : 'Answer was corrent!!!!');
+        this.logger.log(this.playerNames[this.currentPlayerIndex] + " now has " +
+            this.purses[this.currentPlayerIndex] + " Gold Coins.");
+
+        this.moveToNextPlayer()
+    }
+
+    public handleWrongAnswer(): void {
+        this.logger.log('Question was incorrectly answered');
+        this.logger.log(this.playerNames[this.currentPlayerIndex] + " was sent to the penalty box");
+
+        this.inPenaltyBox[this.currentPlayerIndex] = true;
+
+        this.moveToNextPlayer();
+    }
+
+    private moveToNextPlayer() {
+        this.currentPlayerIndex += 1;
+        if (this.currentPlayerIndex == this.playerNames.length)
+            this.currentPlayerIndex = 0;
+    }
+
+    public doesNotHaveWinner() {
+        return !(this.purses.some(p => p == 6));
     }
 
     public log(message: string) {
