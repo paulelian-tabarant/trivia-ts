@@ -86,14 +86,14 @@ export class Game implements Logger {
     }
 
     private askQuestion(): void {
-        if (this.currentCategory() == QuestionCategory.POP)
-            this.logger.log(this.popQuestions.shift());
-        if (this.currentCategory() == QuestionCategory.SCIENCE)
-            this.logger.log(this.scienceQuestions.shift());
-        if (this.currentCategory() == QuestionCategory.SPORTS)
-            this.logger.log(this.sportsQuestions.shift());
-        if (this.currentCategory() == QuestionCategory.ROCK)
-            this.logger.log(this.rockQuestions.shift());
+        const QUESTIONS_BY_CATEGORY: Record<QuestionCategory, string[]> = {
+            [QuestionCategory.POP]: this.popQuestions,
+            [QuestionCategory.SCIENCE]: this.scienceQuestions,
+            [QuestionCategory.SPORTS]: this.sportsQuestions,
+            [QuestionCategory.ROCK]: this.rockQuestions,
+        }
+
+        this.logger.log(QUESTIONS_BY_CATEGORY[this.currentCategory()].shift());
     }
 
     private currentCategory(): string {
