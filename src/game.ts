@@ -49,7 +49,7 @@ export class Game implements Logger {
 
         this.playerNames.forEach((name, index) => {
             this.logger.log(name + " was added");
-            this.logger.log("They are player number " + (index + 1).toString());
+            this.logger.log("They are player number " + (index + 1));
         })
     }
     public roll(roll: number) {
