@@ -1,5 +1,11 @@
 import {Logger} from "./logger";
 
+enum QuestionCategory {
+    POP = 'Pop'
+}
+
+const pop = 'Pop';
+
 export class Game implements Logger {
 
     private players: Array<string> = [];
@@ -79,7 +85,7 @@ export class Game implements Logger {
     }
 
     private askQuestion(): void {
-        if (this.currentCategory() == 'Pop')
+        if (this.currentCategory() == pop)
             this.logger.log(this.popQuestions.shift());
         if (this.currentCategory() == 'Science')
             this.logger.log(this.scienceQuestions.shift());
@@ -91,11 +97,11 @@ export class Game implements Logger {
 
     private currentCategory(): string {
         if (this.places[this.currentPlayer] == 0)
-            return 'Pop';
+            return pop;
         if (this.places[this.currentPlayer] == 4)
-            return 'Pop';
+            return pop;
         if (this.places[this.currentPlayer] == 8)
-            return 'Pop';
+            return pop;
         if (this.places[this.currentPlayer] == 1)
             return 'Science';
         if (this.places[this.currentPlayer] == 5)
