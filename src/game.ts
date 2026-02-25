@@ -62,18 +62,18 @@ export class Game implements Logger {
                 this.isGettingOutOfPenaltyBox = true;
 
                 this.logger.log(this.players[this.currentPlayerIndex] + " is getting out of the penalty box");
-                this.extracted(roll);
+                this.movePlayerAccordingTo(roll);
             } else {
                 this.logger.log(this.players[this.currentPlayerIndex] + " is not getting out of the penalty box");
                 this.isGettingOutOfPenaltyBox = false;
             }
         } else {
 
-            this.extracted(roll)
+            this.movePlayerAccordingTo(roll)
         }
     }
 
-    private extracted(roll: number) {
+    private movePlayerAccordingTo(roll: number) {
         this.places[this.currentPlayerIndex] = this.places[this.currentPlayerIndex] + roll;
         if (this.places[this.currentPlayerIndex] > 11) {
             this.places[this.currentPlayerIndex] = this.places[this.currentPlayerIndex] - 12;
