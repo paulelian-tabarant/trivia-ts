@@ -34,7 +34,7 @@ export class Game implements Logger {
         [QuestionCategory.ROCK]: this.rockQuestions,
     }
 
-    constructor(private players: string[] = [], private readonly logger: Logger = this) {
+    constructor(players: string[] = [], private readonly logger: Logger = this) {
         [
             QuestionCategory.POP,
             QuestionCategory.SCIENCE,
@@ -51,7 +51,7 @@ export class Game implements Logger {
             this.inPenaltyBox[newPlayerIndex] = false;
         })
 
-        this.players.forEach((name, index) => {
+        this.playerNames.forEach((name, index) => {
             this.logger.log(name + " was added");
             this.logger.log("They are player number " + (index + 1).toString());
         })
