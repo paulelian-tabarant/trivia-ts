@@ -5,10 +5,10 @@ const BOARD_SIZE = 12;
 
 export class Game implements Logger {
 
-    private playerNames: Array<string> = [];
-    private places: Array<number> = [];
-    private purses: Array<number> = [];
-    private inPenaltyBox: Array<boolean> = [];
+    private readonly playerNames: Array<string> = [];
+    private readonly places: Array<number> = [];
+    private readonly purses: Array<number> = [];
+    private readonly inPenaltyBox: Array<boolean> = [];
     private currentPlayerIndex: number = 0;
     private isGettingOutOfPenaltyBox: boolean = false;
 
