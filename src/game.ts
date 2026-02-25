@@ -62,6 +62,10 @@ export class Game implements Logger {
         this.askQuestion();
     }
 
+    private askQuestion(): void {
+        this.logger.log(this.QUESTIONS_BY_CATEGORY[this.currentCategory()].shift());
+    }
+
     public handleCorrectAnswerFromCurrentPlayer(): boolean {
         if (this.inPenaltyBox[this.currentPlayerIndex] && !this.isGettingOutOfPenaltyBox) {
             this.moveToNextPlayer()
@@ -97,10 +101,6 @@ export class Game implements Logger {
         this.currentPlayerIndex += 1;
         if (this.currentPlayerIndex == this.playerNames.length)
             this.currentPlayerIndex = 0;
-    }
-
-    private askQuestion(): void {
-        this.logger.log(this.QUESTIONS_BY_CATEGORY[this.currentCategory()].shift());
     }
 
     private currentCategory(): string {
