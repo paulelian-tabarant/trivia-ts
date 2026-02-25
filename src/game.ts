@@ -1,7 +1,10 @@
 import {Logger} from "./logger";
 
 enum QuestionCategory {
-    POP = 'Pop'
+    POP = 'Pop',
+    SCIENCE = 'Science',
+    SPORTS = "Sports",
+    ROCK = "Rock",
 }
 
 export class Game implements Logger {
@@ -25,7 +28,7 @@ export class Game implements Logger {
             this.scienceQuestions.push("Science Question " + i);
             this.sportsQuestions.push("Sports Question " + i);
             this.rockQuestions.push(this.createRockQuestion(i));
-          }
+        }
     }
 
     private createRockQuestion(index: number): string {
@@ -51,34 +54,34 @@ export class Game implements Logger {
     public roll(roll: number) {
         this.logger.log(this.players[this.currentPlayer] + " is the current player");
         this.logger.log("They have rolled a " + roll);
-    
+
         if (this.inPenaltyBox[this.currentPlayer]) {
-          if (roll % 2 != 0) {
-            this.isGettingOutOfPenaltyBox = true;
-    
-            this.logger.log(this.players[this.currentPlayer] + " is getting out of the penalty box");
+            if (roll % 2 != 0) {
+                this.isGettingOutOfPenaltyBox = true;
+
+                this.logger.log(this.players[this.currentPlayer] + " is getting out of the penalty box");
+                this.places[this.currentPlayer] = this.places[this.currentPlayer] + roll;
+                if (this.places[this.currentPlayer] > 11) {
+                    this.places[this.currentPlayer] = this.places[this.currentPlayer] - 12;
+                }
+
+                this.logger.log(this.players[this.currentPlayer] + "'s new location is " + this.places[this.currentPlayer]);
+                this.logger.log("The category is " + this.currentCategory());
+                this.askQuestion();
+            } else {
+                this.logger.log(this.players[this.currentPlayer] + " is not getting out of the penalty box");
+                this.isGettingOutOfPenaltyBox = false;
+            }
+        } else {
+
             this.places[this.currentPlayer] = this.places[this.currentPlayer] + roll;
             if (this.places[this.currentPlayer] > 11) {
-              this.places[this.currentPlayer] = this.places[this.currentPlayer] - 12;
+                this.places[this.currentPlayer] = this.places[this.currentPlayer] - 12;
             }
-    
+
             this.logger.log(this.players[this.currentPlayer] + "'s new location is " + this.places[this.currentPlayer]);
             this.logger.log("The category is " + this.currentCategory());
             this.askQuestion();
-          } else {
-            this.logger.log(this.players[this.currentPlayer] + " is not getting out of the penalty box");
-            this.isGettingOutOfPenaltyBox = false;
-          }
-        } else {
-    
-          this.places[this.currentPlayer] = this.places[this.currentPlayer] + roll;
-          if (this.places[this.currentPlayer] > 11) {
-            this.places[this.currentPlayer] = this.places[this.currentPlayer] - 12;
-          }
-    
-          this.logger.log(this.players[this.currentPlayer] + "'s new location is " + this.places[this.currentPlayer]);
-          this.logger.log("The category is " + this.currentCategory());
-          this.askQuestion();
         }
     }
 
@@ -123,7 +126,7 @@ export class Game implements Logger {
         this.logger.log('Question was incorrectly answered');
         this.logger.log(this.players[this.currentPlayer] + " was sent to the penalty box");
         this.inPenaltyBox[this.currentPlayer] = true;
-    
+
         this.currentPlayer += 1;
         if (this.currentPlayer == this.players.length)
             this.currentPlayer = 0;
@@ -133,26 +136,26 @@ export class Game implements Logger {
     public wasCorrectlyAnswered(): boolean {
         if (this.inPenaltyBox[this.currentPlayer]) {
             if (this.isGettingOutOfPenaltyBox) {
-              this.logger.log('Answer was correct!!!!');
-              this.purses[this.currentPlayer] += 1;
-              this.logger.log(this.players[this.currentPlayer] + " now has " +
-              this.purses[this.currentPlayer] + " Gold Coins.");
+                this.logger.log('Answer was correct!!!!');
+                this.purses[this.currentPlayer] += 1;
+                this.logger.log(this.players[this.currentPlayer] + " now has " +
+                    this.purses[this.currentPlayer] + " Gold Coins.");
 
-              var winner = this.didPlayerWin();
-              this.currentPlayer += 1;
-              if (this.currentPlayer == this.players.length)
-                this.currentPlayer = 0;
+                var winner = this.didPlayerWin();
+                this.currentPlayer += 1;
+                if (this.currentPlayer == this.players.length)
+                    this.currentPlayer = 0;
 
-              return winner;
+                return winner;
             } else {
-              this.currentPlayer += 1;
-              if (this.currentPlayer == this.players.length)
-                this.currentPlayer = 0;
-              return true;
+                this.currentPlayer += 1;
+                if (this.currentPlayer == this.players.length)
+                    this.currentPlayer = 0;
+                return true;
             }
 
 
-          } else {
+        } else {
 
             this.logger.log("Answer was corrent!!!!");
 
@@ -167,7 +170,7 @@ export class Game implements Logger {
                 this.currentPlayer = 0;
 
             return winner;
-          }
+        }
     }
 
     public log(message: string) {
