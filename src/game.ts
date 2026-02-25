@@ -88,34 +88,25 @@ export class Game implements Logger {
     }
 
     public wasCorrectlyAnswered(): boolean {
+        let message
         if (this.inPenaltyBox[this.currentPlayer]) {
             if (!this.isGettingOutOfPenaltyBox) {
                 this.moveToNextPlayer()
                 return true;
             }
 
-            this.purses[this.currentPlayer] += 1;
-
-            this.logger.log('Answer was correct!!!!');
-            this.logger.log(this.players[this.currentPlayer] + " now has " +
-                this.purses[this.currentPlayer] + " Gold Coins.");
-
-            var winner = this.didCurrentPlayerWin();
-            this.moveToNextPlayer()
-
-            return winner;
-
-
+            message = 'Answer was correct!!!!'
+        } else {
+            message = 'Answer was corrent!!!!';
         }
 
-        this.logger.log("Answer was corrent!!!!");
-
         this.purses[this.currentPlayer] += 1;
+
+        this.logger.log(message);
         this.logger.log(this.players[this.currentPlayer] + " now has " +
             this.purses[this.currentPlayer] + " Gold Coins.");
 
         var winner = this.didCurrentPlayerWin();
-
         this.moveToNextPlayer()
 
         return winner;
