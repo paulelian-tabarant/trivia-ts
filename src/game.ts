@@ -79,11 +79,9 @@ export class Game implements Logger {
         this.logger.log(this.playerNames[this.currentPlayerIndex] + " now has " +
             this.purses[this.currentPlayerIndex] + " Gold Coins.");
 
-        const didPlayerWin = !(this.purses.some(p => p == 6));
-
         this.moveToNextPlayer()
 
-        return didPlayerWin;
+        return !(this.purses.some(p => p == 6));
     }
 
     public handleWrongAnswerFromCurrentPlayer(): boolean {
