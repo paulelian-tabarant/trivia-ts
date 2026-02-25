@@ -133,10 +133,6 @@ export class Game implements Logger {
         return true;
     }
 
-    private createRockQuestion(index: number): string {
-        return "Rock Question " + index;
-    }
-
     private howManyPlayers(): number {
         return this.players.length;
     }
