@@ -7,6 +7,10 @@ enum QuestionCategory {
     ROCK = 'Rock',
 }
 
+function buildQuestionNameFrom(questionCategory: QuestionCategory, i: number) {
+    return `${questionCategory} Question ${i}`;
+}
+
 export class Game implements Logger {
 
     private players: Array<string> = [];
@@ -23,16 +27,21 @@ export class Game implements Logger {
 
     constructor(private readonly logger: Logger = this) {
 
-        for (let i = 0; i < 50; i++) {
-            const questionCategory = QuestionCategory.POP
-            this.popQuestions.push(this.getItems(questionCategory, i));
-            this.scienceQuestions.push("Science Question " + i);
-            this.sportsQuestions.push("Sports Question " + i);
-            this.rockQuestions.push("Rock Question " + i);
-        }
+        [
+            QuestionCategory.POP,
+            QuestionCategory.SCIENCE,
+            QuestionCategory.SPORTS,
+            QuestionCategory.ROCK,
+        ]
+            .forEach(category => {
+                for (let i = 0; i < 50; i++) {
+                    const questions = this.QUESTIONS_BY_CATEGORY[category];
+                    questions.push(this.buildQuestionNameFrom(category, i));
+                }
+            })
     }
 
-    private getItems(questionCategory: QuestionCategory.POP, i: number) {
+    private buildQuestionNameFrom(questionCategory: QuestionCategory, i: number) {
         return `${questionCategory} Question ${i}`;
     }
 
