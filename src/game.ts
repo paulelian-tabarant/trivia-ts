@@ -20,8 +20,11 @@ export class Game implements Logger {
     }
 
     constructor(players: string[], private readonly logger: Logger = this) {
-        Object.values(QuestionCategory).forEach(category => this.QUESTIONS_BY_CATEGORY[category] = createFiftyQuestionsOf(category))
+        Object.values(QuestionCategory).forEach(category => {
+            this.QUESTIONS_BY_CATEGORY[category] = createFiftyQuestionsOf(category);
+        })
 
+        // TODO: NaN is very likely to be a bug
         this.playerNames = [...players]
         this.places = [NaN, ...new Array(players.length).fill(0)]
         this.purses = [NaN, ...new Array(players.length).fill(0)]
