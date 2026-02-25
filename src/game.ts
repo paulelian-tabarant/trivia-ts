@@ -45,6 +45,11 @@ export class Game implements Logger {
         players.forEach((player) => {
             this.addNewPlayer(player);
         })
+
+        this.players.forEach((name, index) => {
+            this.logger.log(name + " was added");
+            this.logger.log("They are player number " + (index + 1).toString());
+        })
     }
 
     private addNewPlayer(playerName: string): boolean {
@@ -54,9 +59,11 @@ export class Game implements Logger {
         this.places[newPlayerIndex] = 0;
         this.purses[newPlayerIndex] = 0;
         this.inPenaltyBox[newPlayerIndex] = false;
+/*
 
         this.logger.log(playerName + " was added");
         this.logger.log("They are player number " + newPlayerIndex);
+*/
 
         return true;
     }
