@@ -46,7 +46,7 @@ export class Game implements Logger {
             QuestionCategory.SCIENCE,
             QuestionCategory.SPORTS,
             QuestionCategory.ROCK,
-        ].forEach(category => this.createFiftyQuestionsOf(category))
+        ].forEach(category => this.QUESTIONS_BY_CATEGORY[category] = createFiftyQuestionsOf(category))
 
         this.playerNames = [...players]
         this.places = [NaN, ...new Array(players.length).fill(0)]
@@ -57,10 +57,6 @@ export class Game implements Logger {
             this.logger.log(name + " was added");
             this.logger.log("They are player number " + (index + 1));
         })
-    }
-
-    private createFiftyQuestionsOf(category: QuestionCategory) {
-        this.QUESTIONS_BY_CATEGORY[category] = createFiftyQuestionsOf(category)
     }
 
     public roll(roll: number) {
