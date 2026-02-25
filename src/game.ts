@@ -47,7 +47,7 @@ export class Game implements Logger {
         })
     }
 
-    public addNewPlayer(playerName: string): boolean {
+    private addNewPlayer(playerName: string): boolean {
         this.playerNames.push(playerName);
 
         const newPlayerIndex = this.playerNames.length;
