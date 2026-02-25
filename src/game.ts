@@ -59,6 +59,12 @@ export class Game implements Logger {
         this.logger.log(this.players[this.currentPlayerIndex] + " is the current player");
         this.logger.log("They have rolled a " + roll);
 
+        if (this.inPenaltyBox[this.currentPlayerIndex] && roll % 2 == 0) {
+            this.isGettingOutOfPenaltyBox = false;
+            this.logger.log(this.players[this.currentPlayerIndex] + " is not getting out of the penalty box");
+            return;
+        }
+
         if (this.inPenaltyBox[this.currentPlayerIndex]) {
             if (roll % 2 == 0) {
                 this.isGettingOutOfPenaltyBox = false;
