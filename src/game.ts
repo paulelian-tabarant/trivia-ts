@@ -20,12 +20,7 @@ export class Game implements Logger {
     }
 
     constructor(players: string[], private readonly logger: Logger = this) {
-        [
-            QuestionCategory.POP,
-            QuestionCategory.SCIENCE,
-            QuestionCategory.SPORTS,
-            QuestionCategory.ROCK,
-        ].forEach(category => this.QUESTIONS_BY_CATEGORY[category] = createFiftyQuestionsOf(category))
+        Object.values(QuestionCategory).forEach(category => this.QUESTIONS_BY_CATEGORY[category] = createFiftyQuestionsOf(category))
 
         this.playerNames = [...players]
         this.places = [NaN, ...new Array(players.length).fill(0)]
