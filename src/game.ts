@@ -52,6 +52,12 @@ export class Game implements Logger {
             this.logger.log("They are player number " + (index + 1));
         })
     }
+    private createFiftyQuestionsOf(category: QuestionCategory) {
+        for (let i = 0; i < 50; i++) {
+            this.QUESTIONS_BY_CATEGORY[category].push(nameOfQuestionWith(category, i));
+        }
+    }
+
     public roll(roll: number) {
         const currentPlayerName = this.playerNames[this.currentPlayerIndex];
 
@@ -115,12 +121,6 @@ export class Game implements Logger {
         this.currentPlayerIndex += 1;
         if (this.currentPlayerIndex == this.playerNames.length)
             this.currentPlayerIndex = 0;
-    }
-
-    private createFiftyQuestionsOf(category: QuestionCategory) {
-        for (let i = 0; i < 50; i++) {
-            this.QUESTIONS_BY_CATEGORY[category].push(nameOfQuestionWith(category, i));
-        }
     }
 
     private askQuestion(): void {
