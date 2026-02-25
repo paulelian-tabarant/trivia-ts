@@ -11,6 +11,8 @@ function nameOfQuestionWith(questionCategory: QuestionCategory, questionNumber: 
     return `${questionCategory} Question ${questionNumber}`;
 }
 
+const BOARD_SIZE = 12;
+
 export class Game implements Logger {
 
     private players: Array<string> = [];
@@ -74,10 +76,8 @@ export class Game implements Logger {
     }
 
     private movePlayerAccordingTo(roll: number) {
-        this.places[this.currentPlayerIndex] = this.places[this.currentPlayerIndex] + roll;
-        if (this.places[this.currentPlayerIndex] > 11) {
-            this.places[this.currentPlayerIndex] = this.places[this.currentPlayerIndex] - 12;
-        }
+        this.places[this.currentPlayerIndex] += roll;
+        this.places[this.currentPlayerIndex] %= BOARD_SIZE
 
         this.logger.log(this.players[this.currentPlayerIndex] + "'s new location is " + this.places[this.currentPlayerIndex]);
         this.logger.log("The category is " + this.currentCategory());
