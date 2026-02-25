@@ -62,7 +62,7 @@ export class Game implements Logger {
         this.askQuestion();
     }
 
-    public wasCorrectlyAnswered(): boolean {
+    public handleCorrectAnswerFromCurrentPlayer(): boolean {
         if (this.inPenaltyBox[this.currentPlayerIndex] && !this.isGettingOutOfPenaltyBox) {
             this.moveToNextPlayer()
             return true;

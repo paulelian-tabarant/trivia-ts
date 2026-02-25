@@ -29,7 +29,7 @@ export class GameRunner implements GameMaster {
             if (this.gameMaster.isWrongAnswer()) {
                 notAWinner = game.wrongAnswer();
             } else {
-                notAWinner = game.wasCorrectlyAnswered();
+                notAWinner = game.handleCorrectAnswerFromCurrentPlayer();
             }
 
         } while (notAWinner);
