@@ -1,21 +1,5 @@
 import {Logger} from "./logger";
-
-enum QuestionCategory {
-    POP = 'Pop',
-    SCIENCE = 'Science',
-    SPORTS = 'Sports',
-    ROCK = 'Rock',
-}
-
-function createFiftyQuestionsOf(category: QuestionCategory) {
-    return [...(new Array(50))].map(
-        (_, index) => nameOfQuestionWith(category, index)
-    );
-}
-
-function nameOfQuestionWith(questionCategory: QuestionCategory, questionNumber: number) {
-    return `${questionCategory} Question ${questionNumber}`;
-}
+import {createFiftyQuestionsOf, QuestionCategory} from "./question";
 
 const BOARD_SIZE = 12;
 
