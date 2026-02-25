@@ -52,10 +52,11 @@ export class Game implements Logger {
             this.logger.log("They are player number " + (index + 1));
         })
     }
+
     private createFiftyQuestionsOf(category: QuestionCategory) {
-        for (let i = 0; i < 50; i++) {
-            this.QUESTIONS_BY_CATEGORY[category].push(nameOfQuestionWith(category, i));
-        }
+        this.QUESTIONS_BY_CATEGORY[category] = [...(new Array(50))].map(
+            (_, index) => nameOfQuestionWith(category, index)
+        );
     }
 
     public roll(roll: number) {
