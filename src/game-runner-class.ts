@@ -12,16 +12,9 @@ export class GameRunner implements GameMaster {
     }
 
     public runGame() {
-        const game = new Game([
-            "Chet", "Pat", "Sue"
-        ], this.logger);
-/*
-        game.addNewPlayer("Chet");
-        game.addNewPlayer("Pat");
-        game.addNewPlayer("Sue");
-*/
+        const players = ["Chet", "Pat", "Sue"]
+        const game = new Game(players, this.logger);
 
-        let notAWinner;
         do {
 
             game.playCurrentPlayerTurn(this.gameMaster.getNextRoll());
