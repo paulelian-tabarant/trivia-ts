@@ -26,7 +26,6 @@ export class Game implements Logger {
     private rockQuestions: Array<string> = [];
 
     constructor(private readonly logger: Logger = this) {
-
         [
             QuestionCategory.POP,
             QuestionCategory.SCIENCE,
@@ -35,14 +34,9 @@ export class Game implements Logger {
         ]
             .forEach(category => {
                 for (let i = 0; i < 50; i++) {
-                    const questions = this.QUESTIONS_BY_CATEGORY[category];
-                    questions.push(this.buildQuestionNameFrom(category, i));
+                    this.QUESTIONS_BY_CATEGORY[category].push(buildQuestionNameFrom(category, i));
                 }
             })
-    }
-
-    private buildQuestionNameFrom(questionCategory: QuestionCategory, i: number) {
-        return `${questionCategory} Question ${i}`;
     }
 
     public add(name: string): boolean {
