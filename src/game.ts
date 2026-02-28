@@ -88,11 +88,10 @@ export class Game implements Logger {
             return;
         }
 
-        this.purses[this.currentPlayerIndex] += 1;
-
         // FIXME: 'corrent' is very likely to be a typo
-        this.logger.log(this.inPenaltyBox[this.currentPlayerIndex] && this.isCurrentPlayerGettingOutOfPenaltyBox()?
-            'Answer was correct!!!!' : 'Answer was corrent!!!!');
+        this.logger.log(this.isCurrentPlayerGettingOutOfPenaltyBox() ? 'Answer was correct!!!!' : 'Answer was corrent!!!!');
+
+        this.purses[this.currentPlayerIndex] += 1;
         this.logger.log(this.playerNames[this.currentPlayerIndex] + " now has " +
             this.purses[this.currentPlayerIndex] + " Gold Coins.");
 
