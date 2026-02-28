@@ -10,7 +10,7 @@ export class Game implements Logger {
     private readonly purses: Array<number> = [];
     private readonly inPenaltyBox: Array<boolean> = [];
     private currentPlayerIndex: number = 0;
-    private isGettingOutOfPenaltyBox: boolean = false;
+    private currentPlayerRoll: number = 0;
 
     private QUESTIONS_BY_CATEGORY: Record<QuestionCategory, string[]> = {
         [QuestionCategory.POP]: [],
@@ -38,18 +38,17 @@ export class Game implements Logger {
 
     public playCurrentPlayerTurn(roll: number) {
         const currentPlayerName = this.playerNames[this.currentPlayerIndex];
+        this.currentPlayerRoll = roll;
 
         this.logger.log(currentPlayerName + " is the current player");
         this.logger.log("They have rolled a " + roll);
 
-        this.isGettingOutOfPenaltyBox = this.inPenaltyBox[this.currentPlayerIndex] && roll % 2 != 0;
-
-        if (this.inPenaltyBox[this.currentPlayerIndex] && !this.isGettingOutOfPenaltyBox) {
+        if (this.inPenaltyBox[this.currentPlayerIndex] && !this.isCurrentPlayerGettingOutOfPenaltyBox()) {
             this.logger.log(currentPlayerName + " is not getting out of the penalty box");
             return;
         }
 
-        if (this.isGettingOutOfPenaltyBox) {
+        if (this.isCurrentPlayerGettingOutOfPenaltyBox()) {
             this.logger.log(currentPlayerName + " is getting out of the penalty box");
         }
 
@@ -84,7 +83,7 @@ export class Game implements Logger {
     }
 
     public handleCorrectAnswer(): void {
-        if (this.inPenaltyBox[this.currentPlayerIndex] && !this.isGettingOutOfPenaltyBox) {
+        if (this.inPenaltyBox[this.currentPlayerIndex] && !this.isCurrentPlayerGettingOutOfPenaltyBox()) {
             this.moveToNextPlayer()
             return;
         }
@@ -92,12 +91,16 @@ export class Game implements Logger {
         this.purses[this.currentPlayerIndex] += 1;
 
         // FIXME: 'corrent' is very likely to be a typo
-        this.logger.log(this.inPenaltyBox[this.currentPlayerIndex] && this.isGettingOutOfPenaltyBox ?
+        this.logger.log(this.inPenaltyBox[this.currentPlayerIndex] && this.isCurrentPlayerGettingOutOfPenaltyBox()?
             'Answer was correct!!!!' : 'Answer was corrent!!!!');
         this.logger.log(this.playerNames[this.currentPlayerIndex] + " now has " +
             this.purses[this.currentPlayerIndex] + " Gold Coins.");
 
         this.moveToNextPlayer()
+    }
+
+    private isCurrentPlayerGettingOutOfPenaltyBox() {
+        return this.inPenaltyBox[this.currentPlayerIndex] && this.currentPlayerRoll % 2 != 0;
     }
 
     public handleWrongAnswer(): void {
