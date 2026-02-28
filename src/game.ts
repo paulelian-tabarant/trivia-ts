@@ -8,7 +8,7 @@ export class Game implements Logger {
     private readonly playerNames: Array<string> = [];
     private readonly places: Array<number> = [];
     private readonly purses: Array<number> = [];
-    private readonly inPenaltyBox: Array<boolean> = [];
+    private readonly isPlayerInPenaltyBox: Array<boolean> = [];
     private currentPlayerIndex: number = 0;
     private currentPlayerRoll: number = 0;
 
@@ -28,7 +28,7 @@ export class Game implements Logger {
         this.playerNames = [...players]
         this.places = [NaN, ...new Array(players.length).fill(0)]
         this.purses = [NaN, ...new Array(players.length).fill(0)]
-        this.inPenaltyBox = [NaN, ...new Array(players.length).fill(false)]
+        this.isPlayerInPenaltyBox = [NaN, ...new Array(players.length).fill(false)]
 
         this.playerNames.forEach((name, index) => {
             this.logger.log(name + " was added");
@@ -43,12 +43,12 @@ export class Game implements Logger {
         this.logger.log(currentPlayerName + " is the current player");
         this.logger.log("They have rolled a " + roll);
 
-        if (this.inPenaltyBox[this.currentPlayerIndex] && !this.isCurrentPlayerGettingOutOfPenaltyBox()) {
-            this.logger.log(currentPlayerName + " is not getting out of the penalty box");
-            return;
-        }
+        if (this.isPlayerInPenaltyBox[this.currentPlayerIndex]) {
+            if (roll % 2 === 0) {
+                this.logger.log(currentPlayerName + " is not getting out of the penalty box");
+                return;
+            }
 
-        if (this.isCurrentPlayerGettingOutOfPenaltyBox()) {
             this.logger.log(currentPlayerName + " is getting out of the penalty box");
         }
 
@@ -83,7 +83,7 @@ export class Game implements Logger {
     }
 
     public handleCorrectAnswer(): void {
-        if (this.inPenaltyBox[this.currentPlayerIndex] && !this.isCurrentPlayerGettingOutOfPenaltyBox()) {
+        if (this.isPlayerInPenaltyBox[this.currentPlayerIndex] && !this.isCurrentPlayerGettingOutOfPenaltyBox()) {
             this.moveToNextPlayer()
             return;
         }
@@ -99,14 +99,14 @@ export class Game implements Logger {
     }
 
     private isCurrentPlayerGettingOutOfPenaltyBox() {
-        return this.inPenaltyBox[this.currentPlayerIndex] && this.currentPlayerRoll % 2 != 0;
+        return this.isPlayerInPenaltyBox[this.currentPlayerIndex] && this.currentPlayerRoll % 2 != 0;
     }
 
     public handleWrongAnswer(): void {
         this.logger.log('Question was incorrectly answered');
         this.logger.log(this.playerNames[this.currentPlayerIndex] + " was sent to the penalty box");
 
-        this.inPenaltyBox[this.currentPlayerIndex] = true;
+        this.isPlayerInPenaltyBox[this.currentPlayerIndex] = true;
 
         this.moveToNextPlayer();
     }
