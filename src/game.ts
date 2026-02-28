@@ -38,13 +38,13 @@ export class Game implements Logger {
 
     public playCurrentPlayerTurn(roll: number) {
         const currentPlayerName = this.playerNames[this.currentPlayerIndex];
+        this.logger.log(currentPlayerName + " is the current player");
+
+        this.logger.log("They have rolled a " + roll);
         this.currentPlayerRoll = roll;
 
-        this.logger.log(currentPlayerName + " is the current player");
-        this.logger.log("They have rolled a " + roll);
-
         if (this.isPlayerInPenaltyBox[this.currentPlayerIndex]) {
-            if (canPlayerGetOutOfPenaltyBox(this.currentPlayerRoll)) {
+            if (canPlayerGetOutOfPenaltyBox(roll)) {
                 this.logger.log(currentPlayerName + " is getting out of the penalty box");
             } else {
                 this.logger.log(currentPlayerName + " is not getting out of the penalty box");
