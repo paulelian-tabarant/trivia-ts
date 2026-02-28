@@ -44,7 +44,7 @@ export class Game implements Logger {
         this.logger.log("They have rolled a " + roll);
 
         if (this.isPlayerInPenaltyBox[this.currentPlayerIndex]) {
-            if (this.canCurrentPlayerGetOutOfPenaltyBox()) {
+            if (canPlayerGetOutOfPenaltyBox(this.currentPlayerRoll)) {
                 this.logger.log(currentPlayerName + " is getting out of the penalty box");
             } else {
                 this.logger.log(currentPlayerName + " is not getting out of the penalty box");
@@ -84,7 +84,7 @@ export class Game implements Logger {
 
     public handleCorrectAnswer(): void {
         if (this.isPlayerInPenaltyBox[this.currentPlayerIndex]) {
-            if (this.canCurrentPlayerGetOutOfPenaltyBox()) {
+            if (canPlayerGetOutOfPenaltyBox(this.currentPlayerRoll)) {
                 this.logger.log('Answer was correct!!!!')
             } else {
                 this.moveToNextPlayer()
@@ -100,10 +100,6 @@ export class Game implements Logger {
             this.purses[this.currentPlayerIndex] + " Gold Coins.");
 
         this.moveToNextPlayer()
-    }
-
-    private canCurrentPlayerGetOutOfPenaltyBox() {
-        return this.currentPlayerRoll % 2 !== 0;
     }
 
     public handleWrongAnswer(): void {
@@ -129,3 +125,8 @@ export class Game implements Logger {
         console.log(message);
     }
 }
+
+function canPlayerGetOutOfPenaltyBox(playerRoll: number): boolean {
+    return playerRoll % 2 !== 0;
+}
+
