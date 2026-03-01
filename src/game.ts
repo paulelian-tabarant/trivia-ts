@@ -33,10 +33,12 @@ export class Game implements Logger {
         }), {} as Record<QuestionCategory, string[] | undefined>)
 
     constructor(players: string[], private readonly logger: Logger = this) {
-        // FIXME: NaN is very likely to be a bug
         this.players = players.map(((name, index) => {
             const isBuggyPlayer = index === 0
-            return isBuggyPlayer ? new Player(name, index + 1, NaN, NaN) : new Player(name, index + 1)
+            // FIXME: NaN is very likely to be a bug
+            return isBuggyPlayer ?
+                new Player(name, index + 1, NaN, NaN) :
+                new Player(name, index + 1)
         }));
 
         this.players.forEach((player, index) => {
@@ -89,10 +91,6 @@ export class Game implements Logger {
         this.moveToNextPlayer()
     }
 
-    private get currentPlayer(): Player {
-        return this.players[this.currentPlayerIndex];
-    }
-
     public handleWrongAnswer(): void {
         this.logger.log('Question was incorrectly answered');
 
@@ -100,6 +98,10 @@ export class Game implements Logger {
         this.logger.log(this.currentPlayer.name + " was sent to the penalty box");
 
         this.moveToNextPlayer();
+    }
+
+    private get currentPlayer(): Player {
+        return this.players[this.currentPlayerIndex];
     }
 
     private moveToNextPlayer() {
@@ -115,8 +117,3 @@ export class Game implements Logger {
         console.log(message);
     }
 }
-
-function canPlayerGetOutOfPenaltyBox(playerRoll: number): boolean {
-    return playerRoll % 2 !== 0;
-}
-
