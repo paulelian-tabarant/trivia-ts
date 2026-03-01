@@ -5,8 +5,8 @@ export enum QuestionCategory {
     ROCK = 'Rock',
 }
 
-export function createFiftyQuestionsOf(category: QuestionCategory) {
-    return [...(new Array(50))].map(
+export function createNQuestionsOfCategory(n: number, category: QuestionCategory): string[] {
+    return [...(new Array(n))].map(
         (_, index) => nameOfQuestionWith(category, index)
     );
 }

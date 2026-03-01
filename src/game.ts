@@ -1,5 +1,6 @@
 import {Logger} from "./logger";
-import {createFiftyQuestionsOf, QuestionCategory} from "./question";
+import {createNQuestionsOfCategory, QuestionCategory} from "./question";
+import {Q} from "vitest/dist/chunks/reporters.6vxQttCV";
 
 const BOARD_SIZE = 12;
 
@@ -28,18 +29,13 @@ export class Game implements Logger {
         11: QuestionCategory.ROCK,
     }
 
-    private QUESTIONS_BY_CATEGORY: Record<QuestionCategory, string[]> = {
-        [QuestionCategory.POP]: [],
-        [QuestionCategory.SCIENCE]: [],
-        [QuestionCategory.SPORTS]: [],
-        [QuestionCategory.ROCK]: [],
-    }
+    private static QUESTIONS_BY_CATEGORY: Record<QuestionCategory, string[]> = Object.values(QuestionCategory)
+        .reduce((acc, category) => {
+            acc[category] = createNQuestionsOfCategory(50, category);
+            return acc;
+        }, {} as Record<QuestionCategory, string[] | undefined>)
 
     constructor(players: string[], private readonly logger: Logger = this) {
-        Object.values(QuestionCategory).forEach(category => {
-            this.QUESTIONS_BY_CATEGORY[category] = createFiftyQuestionsOf(category);
-        })
-
         // FIXME: NaN is very likely to be a bug
         this.playerNames = [...players]
         this.places = [NaN, ...new Array(players.length).fill(0)]
@@ -74,9 +70,10 @@ export class Game implements Logger {
         this.logger.log(this.playerNames[this.currentPlayerIndex] + "'s new location is " + this.places[this.currentPlayerIndex]);
         this.logger.log("The category is " + this.currentCategory());
 
-        const questionToAsk = this.QUESTIONS_BY_CATEGORY[this.currentCategory()].shift()
+        const questionToAsk = Game.QUESTIONS_BY_CATEGORY[this.currentCategory()].shift()
         this.logger.log(questionToAsk);
     }
+
     private currentCategory(): string {
         const currentPlayerPlace = this.places[this.currentPlayerIndex];
 
