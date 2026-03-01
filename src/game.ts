@@ -49,10 +49,10 @@ export class Game implements Logger {
         this.logger.log(this.currentPlayer.name + " is the current player");
 
         this.logger.log("They have rolled a " + roll);
-        this.currentPlayer.defineCurrentRoll(roll);
+        this.currentPlayer.registerLastRoll(roll);
 
         if (this.currentPlayer.isInPenaltyBox) {
-            if (canPlayerGetOutOfPenaltyBox(roll)) {
+            if (this.currentPlayer.canGetOutOfPenaltyBox()) {
                 this.logger.log(this.currentPlayer.name + " is getting out of the penalty box");
             } else {
                 this.logger.log(this.currentPlayer.name + " is not getting out of the penalty box");
@@ -72,7 +72,7 @@ export class Game implements Logger {
 
     public handleCorrectAnswer(): void {
         if (this.currentPlayer.isInPenaltyBox) {
-            if (canPlayerGetOutOfPenaltyBox(this.currentPlayer.currentRoll)) {
+            if (this.currentPlayer.canGetOutOfPenaltyBox()) {
                 this.logger.log('Answer was correct!!!!')
             } else {
                 this.moveToNextPlayer()
@@ -84,8 +84,7 @@ export class Game implements Logger {
         }
 
         this.currentPlayer.addGoldCoin()
-        this.logger.log(this.currentPlayer.name + " now has " +
-            this.currentPlayer.numberOfGoldCoins + " Gold Coins.");
+        this.logger.log(this.currentPlayer.name + " now has " + this.currentPlayer.numberOfGoldCoins + " Gold Coins.");
 
         this.moveToNextPlayer()
     }
@@ -96,9 +95,9 @@ export class Game implements Logger {
 
     public handleWrongAnswer(): void {
         this.logger.log('Question was incorrectly answered');
-        this.logger.log(this.currentPlayer.name + " was sent to the penalty box");
 
-        this.currentPlayer.putToPenaltyBox();
+        this.currentPlayer.sendToPenaltyBox();
+        this.logger.log(this.currentPlayer.name + " was sent to the penalty box");
 
         this.moveToNextPlayer();
     }
