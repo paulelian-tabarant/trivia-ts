@@ -20,10 +20,6 @@ export class Player {
         this._isInPenaltyBox = true;
     }
 
-    get isInPenaltyBox(): boolean {
-        return this._isInPenaltyBox;
-    }
-
     addGoldCoin(): void {
         this._numberOfGoldCoins += 1;
     }
@@ -55,5 +51,9 @@ export class Player {
 
     isInPenaltyBoxAndCanGetOut(): boolean {
         return this.isInPenaltyBox && this.canGetOutOfPenaltyBox();
+    }
+
+    private get isInPenaltyBox(): boolean {
+        return this._isInPenaltyBox;
     }
 }
