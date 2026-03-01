@@ -17,29 +17,12 @@ export class Player {
         this._location = location;
     }
 
-    sendToPenaltyBox(): void {
-        this.isInPenaltyBox = true;
-    }
-
-    addGoldCoin(): void {
-        this._numberOfGoldCoins += 1;
-    }
-
     get numberOfGoldCoins(): number {
         return this._numberOfGoldCoins;
     }
 
-    move(roll: number): void {
-        this._location += roll;
-        this._location %= Game.BOARD_SIZE;
-    }
-
     get location(): number {
         return this._location;
-    }
-
-    registerLastRoll(roll: number) {
-        this.lastRoll = roll;
     }
 
     isInPenaltyBoxAndCannotGetOut(): boolean {
@@ -52,5 +35,22 @@ export class Player {
 
     private canGetOutOfPenaltyBox() {
         return this.lastRoll % 2 !== 0;
+    }
+
+    sendToPenaltyBox(): void {
+        this.isInPenaltyBox = true;
+    }
+
+    addGoldCoin(): void {
+        this._numberOfGoldCoins += 1;
+    }
+
+    move(roll: number): void {
+        this._location += roll;
+        this._location %= Game.BOARD_SIZE;
+    }
+
+    registerLastRoll(roll: number) {
+        this.lastRoll = roll;
     }
 }
