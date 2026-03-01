@@ -7,7 +7,6 @@ export class Game implements Logger {
     private readonly players: Array<Player> = [];
     private readonly places: Array<number> = [];
     private readonly purses: Array<number> = [];
-    private readonly isPlayerInPenaltyBox: Array<boolean> = [];
     private currentPlayerIndex: number = 0;
     private currentPlayerRoll: number = 0;
 
@@ -41,7 +40,6 @@ export class Game implements Logger {
         this.players = players.map(((name, index) => new Player(name, index + 1)));
         this.places = [NaN, ...new Array(players.length).fill(0)]
         this.purses = [NaN, ...new Array(players.length).fill(0)]
-        this.isPlayerInPenaltyBox = [NaN, ...new Array(players.length).fill(false)]
 
         this.players.forEach((player, index) => {
             this.logger.log(player.name + " was added");
@@ -56,7 +54,7 @@ export class Game implements Logger {
         this.logger.log("They have rolled a " + roll);
         this.currentPlayerRoll = roll;
 
-        if (this.isPlayerInPenaltyBox[this.currentPlayerIndex]) {
+        if (this.players[this.currentPlayerIndex].isInPenaltyBox) {
             if (canPlayerGetOutOfPenaltyBox(roll)) {
                 this.logger.log(currentPlayerName + " is getting out of the penalty box");
             } else {
@@ -105,7 +103,6 @@ export class Game implements Logger {
         this.logger.log('Question was incorrectly answered');
         this.logger.log(this.players[this.currentPlayerIndex].name + " was sent to the penalty box");
 
-        this.isPlayerInPenaltyBox[this.currentPlayerIndex] = true;
         this.players[this.currentPlayerIndex].putToPenaltyBox();
 
         this.moveToNextPlayer();
