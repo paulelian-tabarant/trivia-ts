@@ -3,7 +3,7 @@ import {GameMaster} from "../src/game-master";
 import {Logger} from "../src/logger";
 import {GameRunner} from "../src/game-runner-class";
 
-describe('The test environment', () => {
+describe('Golden Master', () => {
     it("should behave as the original game runner", function () {
         let currentRoll = 0;
         const gameMasterStub: GameMaster = {

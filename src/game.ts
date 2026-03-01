@@ -64,7 +64,7 @@ export class Game implements Logger {
 
     private currentCategory(): string {
         const CATEGORY_BY_PLACE: Record<number, QuestionCategory | undefined> = {
-            NaN: QuestionCategory.ROCK, // probable bug
+            NaN: QuestionCategory.ROCK, // FIXME probable bug
             0: QuestionCategory.POP,
             1: QuestionCategory.SCIENCE,
             2: QuestionCategory.SPORTS,
