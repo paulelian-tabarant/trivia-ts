@@ -2,9 +2,6 @@ import {Logger} from "./logger";
 import {createNQuestionsOfCategory, QuestionCategory} from "./question";
 import {Q} from "vitest/dist/chunks/reporters.6vxQttCV";
 
-const BOARD_SIZE = 12;
-const NUMBER_OF_GOLD_COINS_TO_WIN = 6;
-
 export class Game implements Logger {
 
     private readonly playerNames: Array<string> = [];
@@ -13,6 +10,9 @@ export class Game implements Logger {
     private readonly isPlayerInPenaltyBox: Array<boolean> = [];
     private currentPlayerIndex: number = 0;
     private currentPlayerRoll: number = 0;
+
+    private static BOARD_SIZE = 12;
+    private static NUMBER_OF_GOLD_COINS_TO_WIN = 6;
 
     private static BOARD: Record<number, QuestionCategory | undefined> = {
         NaN: QuestionCategory.ROCK, // FIXME probable bug
@@ -66,16 +66,16 @@ export class Game implements Logger {
         }
 
         this.places[this.currentPlayerIndex] += roll;
-        this.places[this.currentPlayerIndex] %= BOARD_SIZE
+        this.places[this.currentPlayerIndex] %= Game.BOARD_SIZE;
 
         this.logger.log(this.playerNames[this.currentPlayerIndex] + "'s new location is " + this.places[this.currentPlayerIndex]);
-        this.logger.log("The category is " + this.currentCategory());
+        this.logger.log("The category is " + this.readCurrentPlayerCategory());
 
-        const questionToAsk = Game.QUESTIONS_BY_CATEGORY[this.currentCategory()].shift()
+        const questionToAsk = Game.QUESTIONS_BY_CATEGORY[this.readCurrentPlayerCategory()].shift()
         this.logger.log(questionToAsk);
     }
 
-    private currentCategory(): string {
+    private readCurrentPlayerCategory(): string {
         const currentPlayerPlace = this.places[this.currentPlayerIndex];
 
         return Game.BOARD[currentPlayerPlace];
@@ -116,7 +116,7 @@ export class Game implements Logger {
     }
 
     public doesNotHaveWinner() {
-        return !(this.purses.some(p => p === NUMBER_OF_GOLD_COINS_TO_WIN));
+        return !(this.purses.some(p => p === Game.NUMBER_OF_GOLD_COINS_TO_WIN));
     }
 
     public log(message: string) {
