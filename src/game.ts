@@ -1,9 +1,10 @@
 import {Logger} from "./logger";
 import {createNQuestionsOfCategory, QuestionCategory} from "./question";
-import {Q} from "vitest/dist/chunks/reporters.6vxQttCV";
+import {Player} from "./player";
 
 export class Game implements Logger {
 
+    private readonly players: Array<Player> = [];
     private readonly playerNames: Array<string> = [];
     private readonly places: Array<number> = [];
     private readonly purses: Array<number> = [];
@@ -38,13 +39,14 @@ export class Game implements Logger {
 
     constructor(players: string[], private readonly logger: Logger = this) {
         // FIXME: NaN is very likely to be a bug
+        this.players = players.map(name => new Player(name))
         this.playerNames = [...players]
         this.places = [NaN, ...new Array(players.length).fill(0)]
         this.purses = [NaN, ...new Array(players.length).fill(0)]
         this.isPlayerInPenaltyBox = [NaN, ...new Array(players.length).fill(false)]
 
-        this.playerNames.forEach((name, index) => {
-            this.logger.log(name + " was added");
+        this.players.forEach((player, index) => {
+            this.logger.log(player.name + " was added");
             this.logger.log("They are player number " + (index + 1));
         })
     }
