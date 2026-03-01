@@ -1,14 +1,18 @@
+import {Game} from "./game";
+
 export class Player {
     public readonly name: string;
     public readonly number: number;
     private _isInPenaltyBox: boolean;
     private _numberOfGoldCoins: number;
+    private _location: number;
 
-    constructor(name: string, number: number, numberOfGoldCoins: number = 0) {
+    constructor(name: string, number: number, numberOfGoldCoins: number = 0, location: number = 0) {
         this.name = name;
         this.number = number;
         this._isInPenaltyBox = false;
         this._numberOfGoldCoins = numberOfGoldCoins;
+        this._location = location;
     }
 
     putToPenaltyBox(): void {
@@ -25,5 +29,14 @@ export class Player {
 
     get numberOfGoldCoins(): number {
         return this._numberOfGoldCoins;
+    }
+
+    move(roll: number): void {
+        this._location += roll;
+        this._location %= Game.BOARD_SIZE;
+    }
+
+    get location(): number {
+        return this._location;
     }
 }

@@ -9,8 +9,8 @@ export class Game implements Logger {
     private currentPlayerIndex: number = 0;
     private currentPlayerRoll: number = 0;
 
-    private static BOARD_SIZE = 12;
-    private static NUMBER_OF_GOLD_COINS_TO_WIN = 6;
+    public static readonly BOARD_SIZE = 12;
+    private static readonly NUMBER_OF_GOLD_COINS_TO_WIN = 6;
 
     private static BOARD: Record<number, QuestionCategory | undefined> = {
         NaN: QuestionCategory.ROCK, // FIXME probable bug
@@ -38,7 +38,7 @@ export class Game implements Logger {
         // FIXME: NaN is very likely to be a bug
         this.players = players.map(((name, index) => {
             const isBuggyPlayer = index === 0
-            return isBuggyPlayer ? new Player(name, index + 1, NaN) : new Player(name, index + 1)
+            return isBuggyPlayer ? new Player(name, index + 1, NaN, NaN) : new Player(name, index + 1)
         }));
         this.places = [NaN, ...new Array(players.length).fill(0)]
 
@@ -65,8 +65,9 @@ export class Game implements Logger {
 
         this.places[this.currentPlayerIndex] += roll;
         this.places[this.currentPlayerIndex] %= Game.BOARD_SIZE;
+        this.currentPlayer.move(roll)
 
-        this.logger.log(this.currentPlayer.name + "'s new location is " + this.places[this.currentPlayerIndex]);
+        this.logger.log(this.currentPlayer.name + "'s new location is " + this.currentPlayer.location);
         this.logger.log("The category is " + this.readCurrentPlayerCategory());
 
         const questionToAsk = Game.QUESTIONS_BY_CATEGORY[this.readCurrentPlayerCategory()].shift()
@@ -74,9 +75,7 @@ export class Game implements Logger {
     }
 
     private readCurrentPlayerCategory(): string {
-        const currentPlayerPlace = this.places[this.currentPlayerIndex];
-
-        return Game.BOARD[currentPlayerPlace];
+        return Game.BOARD[this.currentPlayer.location];
     }
 
     public handleCorrectAnswer(): void {
