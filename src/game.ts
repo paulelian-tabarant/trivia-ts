@@ -52,7 +52,7 @@ export class Game implements Logger {
     }
 
     public playCurrentPlayerTurn(roll: number) {
-        const currentPlayerName = this.playerNames[this.currentPlayerIndex];
+        const currentPlayerName = this.players[this.currentPlayerIndex].name;
         this.logger.log(currentPlayerName + " is the current player");
 
         this.logger.log("They have rolled a " + roll);
@@ -70,7 +70,7 @@ export class Game implements Logger {
         this.places[this.currentPlayerIndex] += roll;
         this.places[this.currentPlayerIndex] %= Game.BOARD_SIZE;
 
-        this.logger.log(this.playerNames[this.currentPlayerIndex] + "'s new location is " + this.places[this.currentPlayerIndex]);
+        this.logger.log(this.players[this.currentPlayerIndex].name + "'s new location is " + this.places[this.currentPlayerIndex]);
         this.logger.log("The category is " + this.readCurrentPlayerCategory());
 
         const questionToAsk = Game.QUESTIONS_BY_CATEGORY[this.readCurrentPlayerCategory()].shift()
@@ -97,7 +97,7 @@ export class Game implements Logger {
         }
 
         this.purses[this.currentPlayerIndex] += 1;
-        this.logger.log(this.playerNames[this.currentPlayerIndex] + " now has " +
+        this.logger.log(this.players[this.currentPlayerIndex].name + " now has " +
             this.purses[this.currentPlayerIndex] + " Gold Coins.");
 
         this.moveToNextPlayer()
@@ -105,7 +105,7 @@ export class Game implements Logger {
 
     public handleWrongAnswer(): void {
         this.logger.log('Question was incorrectly answered');
-        this.logger.log(this.playerNames[this.currentPlayerIndex] + " was sent to the penalty box");
+        this.logger.log(this.players[this.currentPlayerIndex].name + " was sent to the penalty box");
 
         this.isPlayerInPenaltyBox[this.currentPlayerIndex] = true;
 
