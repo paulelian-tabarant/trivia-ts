@@ -3,21 +3,22 @@ import {Game} from "./game";
 export class Player {
     public readonly name: string;
     public readonly number: number;
-    private _isInPenaltyBox: boolean;
+
     private _numberOfGoldCoins: number;
     private _location: number;
-    private _lastRoll: number;
+    private isInPenaltyBox: boolean;
+    private lastRoll: number;
 
     constructor(name: string, number: number, numberOfGoldCoins: number = 0, location: number = 0) {
         this.name = name;
         this.number = number;
-        this._isInPenaltyBox = false;
+        this.isInPenaltyBox = false;
         this._numberOfGoldCoins = numberOfGoldCoins;
         this._location = location;
     }
 
     sendToPenaltyBox(): void {
-        this._isInPenaltyBox = true;
+        this.isInPenaltyBox = true;
     }
 
     addGoldCoin(): void {
@@ -38,11 +39,7 @@ export class Player {
     }
 
     registerLastRoll(roll: number) {
-        this._lastRoll = roll;
-    }
-
-    canGetOutOfPenaltyBox() {
-        return this._lastRoll % 2 !== 0;
+        this.lastRoll = roll;
     }
 
     isInPenaltyBoxAndCannotGetOut(): boolean {
@@ -53,7 +50,7 @@ export class Player {
         return this.isInPenaltyBox && this.canGetOutOfPenaltyBox();
     }
 
-    private get isInPenaltyBox(): boolean {
-        return this._isInPenaltyBox;
+    private canGetOutOfPenaltyBox() {
+        return this.lastRoll % 2 !== 0;
     }
 }
