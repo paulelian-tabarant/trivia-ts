@@ -3,6 +3,7 @@ import {createNQuestionsOfCategory, QuestionCategory} from "./question";
 import {Q} from "vitest/dist/chunks/reporters.6vxQttCV";
 
 const BOARD_SIZE = 12;
+const NUMBER_OF_GOLD_COINS_TO_WIN = 6;
 
 export class Game implements Logger {
 
@@ -115,7 +116,7 @@ export class Game implements Logger {
     }
 
     public doesNotHaveWinner() {
-        return !(this.purses.some(p => p == 6));
+        return !(this.purses.some(p => p === NUMBER_OF_GOLD_COINS_TO_WIN));
     }
 
     public log(message: string) {
