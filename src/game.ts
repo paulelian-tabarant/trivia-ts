@@ -7,7 +7,6 @@ export class Game implements Logger {
     private readonly players: Array<Player> = [];
     private readonly buggyPlayers: Array<Player> = [];
     private readonly places: Array<number> = [];
-    private readonly purses: Array<number> = [];
     private currentPlayerIndex: number = 0;
     private currentPlayerRoll: number = 0;
 
@@ -44,7 +43,6 @@ export class Game implements Logger {
             return isBuggyPlayer ? new Player(name, index + 1, NaN) : new Player(name, index + 1)
         }));
         this.places = [NaN, ...new Array(players.length).fill(0)]
-        this.purses = [NaN, ...new Array(players.length).fill(0)]
 
         this.players.forEach((player, index) => {
             this.logger.log(player.name + " was added");
@@ -53,16 +51,16 @@ export class Game implements Logger {
     }
 
     public playCurrentPlayerTurn(roll: number) {
-        this.logger.log(this.currentPlayer.name + " is the current player");
+        this.logger.log(this.currentBuggyPlayer.name + " is the current player");
 
         this.logger.log("They have rolled a " + roll);
         this.currentPlayerRoll = roll;
 
-        if (this.currentPlayer.isInPenaltyBox) {
+        if (this.currentBuggyPlayer.isInPenaltyBox) {
             if (canPlayerGetOutOfPenaltyBox(roll)) {
-                this.logger.log(this.currentPlayer.name + " is getting out of the penalty box");
+                this.logger.log(this.currentBuggyPlayer.name + " is getting out of the penalty box");
             } else {
-                this.logger.log(this.currentPlayer.name + " is not getting out of the penalty box");
+                this.logger.log(this.currentBuggyPlayer.name + " is not getting out of the penalty box");
                 return;
             }
         }
@@ -70,7 +68,7 @@ export class Game implements Logger {
         this.places[this.currentPlayerIndex] += roll;
         this.places[this.currentPlayerIndex] %= Game.BOARD_SIZE;
 
-        this.logger.log(this.currentPlayer.name + "'s new location is " + this.places[this.currentPlayerIndex]);
+        this.logger.log(this.currentBuggyPlayer.name + "'s new location is " + this.places[this.currentPlayerIndex]);
         this.logger.log("The category is " + this.readCurrentPlayerCategory());
 
         const questionToAsk = Game.QUESTIONS_BY_CATEGORY[this.readCurrentPlayerCategory()].shift()
@@ -84,7 +82,7 @@ export class Game implements Logger {
     }
 
     public handleCorrectAnswer(): void {
-        if (this.currentPlayer.isInPenaltyBox) {
+        if (this.currentBuggyPlayer.isInPenaltyBox) {
             if (canPlayerGetOutOfPenaltyBox(this.currentPlayerRoll)) {
                 this.logger.log('Answer was correct!!!!')
             } else {
@@ -96,7 +94,6 @@ export class Game implements Logger {
             this.logger.log('Answer was corrent!!!!')
         }
 
-        this.purses[this.currentPlayerIndex] += 1;
         this.currentBuggyPlayer.addGoldCoin()
         this.logger.log(this.currentBuggyPlayer.name + " now has " +
             this.currentBuggyPlayer.numberOfGoldCoins + " Gold Coins.");
@@ -114,9 +111,9 @@ export class Game implements Logger {
 
     public handleWrongAnswer(): void {
         this.logger.log('Question was incorrectly answered');
-        this.logger.log(this.currentPlayer.name + " was sent to the penalty box");
+        this.logger.log(this.currentBuggyPlayer.name + " was sent to the penalty box");
 
-        this.currentPlayer.putToPenaltyBox();
+        this.currentBuggyPlayer.putToPenaltyBox();
 
         this.moveToNextPlayer();
     }
@@ -127,7 +124,7 @@ export class Game implements Logger {
     }
 
     public doesNotHaveWinner() {
-        return !(this.purses.some(p => p === Game.NUMBER_OF_GOLD_COINS_TO_WIN));
+        return !(this.buggyPlayers.some(p => p.numberOfGoldCoins === Game.NUMBER_OF_GOLD_COINS_TO_WIN));
     }
 
     public log(message: string) {
