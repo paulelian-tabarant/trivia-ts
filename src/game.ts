@@ -111,8 +111,7 @@ export class Game implements Logger {
 
     private moveToNextPlayer() {
         this.currentPlayerIndex += 1;
-        if (this.currentPlayerIndex == this.playerNames.length)
-            this.currentPlayerIndex = 0;
+        this.currentPlayerIndex %= this.playerNames.length;
     }
 
     public doesNotHaveWinner() {
