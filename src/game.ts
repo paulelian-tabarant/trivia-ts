@@ -5,7 +5,6 @@ import {Player} from "./player";
 export class Game implements Logger {
 
     private readonly players: Array<Player> = [];
-    private readonly playerNames: Array<string> = [];
     private readonly places: Array<number> = [];
     private readonly purses: Array<number> = [];
     private readonly isPlayerInPenaltyBox: Array<boolean> = [];
@@ -40,7 +39,6 @@ export class Game implements Logger {
     constructor(players: string[], private readonly logger: Logger = this) {
         // FIXME: NaN is very likely to be a bug
         this.players = players.map(name => new Player(name))
-        this.playerNames = [...players]
         this.places = [NaN, ...new Array(players.length).fill(0)]
         this.purses = [NaN, ...new Array(players.length).fill(0)]
         this.isPlayerInPenaltyBox = [NaN, ...new Array(players.length).fill(false)]
@@ -114,7 +112,7 @@ export class Game implements Logger {
 
     private moveToNextPlayer() {
         this.currentPlayerIndex += 1;
-        this.currentPlayerIndex %= this.playerNames.length;
+        this.currentPlayerIndex %= this.players.length;
     }
 
     public doesNotHaveWinner() {
