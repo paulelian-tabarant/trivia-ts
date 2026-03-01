@@ -62,16 +62,13 @@ export class Game implements Logger {
         }
 
         this.currentPlayer.move(roll)
-
         this.logger.log(this.currentPlayer.name + "'s new location is " + this.currentPlayer.location);
-        this.logger.log("The category is " + this.readCurrentPlayerCategory());
 
-        const questionToAsk = Game.QUESTIONS_BY_CATEGORY[this.readCurrentPlayerCategory()].shift()
+        const currentCategory = Game.BOARD[this.currentPlayer.location];
+        this.logger.log("The category is " + currentCategory);
+
+        const questionToAsk = Game.QUESTIONS_BY_CATEGORY[currentCategory].shift()
         this.logger.log(questionToAsk);
-    }
-
-    private readCurrentPlayerCategory(): string {
-        return Game.BOARD[this.currentPlayer.location];
     }
 
     public handleCorrectAnswer(): void {
