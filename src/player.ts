@@ -48,4 +48,12 @@ export class Player {
     canGetOutOfPenaltyBox() {
         return this._lastRoll % 2 !== 0;
     }
+
+    isInPenaltyBoxAndCannotGetOut(): boolean {
+        return this.isInPenaltyBox && !this.canGetOutOfPenaltyBox();
+    }
+
+    isInPenaltyBoxAndCanGetOut(): boolean {
+        return this.isInPenaltyBox && this.canGetOutOfPenaltyBox();
+    }
 }

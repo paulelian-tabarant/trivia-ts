@@ -53,13 +53,13 @@ export class Game implements Logger {
         this.logger.log("They have rolled a " + roll);
         this.currentPlayer.registerLastRoll(roll);
 
-        if (this.currentPlayer.isInPenaltyBox) {
-            if (this.currentPlayer.canGetOutOfPenaltyBox()) {
-                this.logger.log(this.currentPlayer.name + " is getting out of the penalty box");
-            } else {
-                this.logger.log(this.currentPlayer.name + " is not getting out of the penalty box");
-                return;
-            }
+        if (this.currentPlayer.isInPenaltyBoxAndCannotGetOut()) {
+            this.logger.log(this.currentPlayer.name + " is not getting out of the penalty box");
+            return;
+        }
+
+        if (this.currentPlayer.isInPenaltyBoxAndCanGetOut()) {
+            this.logger.log(this.currentPlayer.name + " is getting out of the penalty box");
         }
 
         this.currentPlayer.move(roll)
@@ -73,12 +73,13 @@ export class Game implements Logger {
     }
 
     public handleCorrectAnswer(): void {
+        if (this.currentPlayer.isInPenaltyBoxAndCannotGetOut()) {
+            this.moveToNextPlayer()
+            return;
+        }
         if (this.currentPlayer.isInPenaltyBox) {
             if (this.currentPlayer.canGetOutOfPenaltyBox()) {
                 this.logger.log('Answer was correct!!!!')
-            } else {
-                this.moveToNextPlayer()
-                return;
             }
         } else {
             // FIXME: 'corrent' is very likely to be a typo
