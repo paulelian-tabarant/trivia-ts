@@ -5,7 +5,6 @@ import {Player} from "./player";
 export class Game implements Logger {
 
     private readonly players: Array<Player> = [];
-    private readonly places: Array<number> = [];
     private currentPlayerIndex: number = 0;
     private currentPlayerRoll: number = 0;
 
@@ -40,7 +39,6 @@ export class Game implements Logger {
             const isBuggyPlayer = index === 0
             return isBuggyPlayer ? new Player(name, index + 1, NaN, NaN) : new Player(name, index + 1)
         }));
-        this.places = [NaN, ...new Array(players.length).fill(0)]
 
         this.players.forEach((player, index) => {
             this.logger.log(player.name + " was added");
@@ -63,8 +61,6 @@ export class Game implements Logger {
             }
         }
 
-        this.places[this.currentPlayerIndex] += roll;
-        this.places[this.currentPlayerIndex] %= Game.BOARD_SIZE;
         this.currentPlayer.move(roll)
 
         this.logger.log(this.currentPlayer.name + "'s new location is " + this.currentPlayer.location);
