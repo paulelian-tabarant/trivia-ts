@@ -77,14 +77,12 @@ export class Game implements Logger {
             this.moveToNextPlayer()
             return;
         }
-        if (this.currentPlayer.isInPenaltyBox) {
-            if (this.currentPlayer.canGetOutOfPenaltyBox()) {
-                this.logger.log('Answer was correct!!!!')
-            }
-        } else {
-            // FIXME: 'corrent' is very likely to be a typo
-            this.logger.log('Answer was corrent!!!!')
-        }
+
+        const correctAnswerLogMessage = this.currentPlayer.isInPenaltyBoxAndCanGetOut() ?
+            'Answer was correct!!!!' :
+            // FIXME: probable typo
+            'Answer was corrent!!!!';
+        this.logger.log(correctAnswerLogMessage)
 
         this.currentPlayer.addGoldCoin()
         this.logger.log(this.currentPlayer.name + " now has " + this.currentPlayer.numberOfGoldCoins + " Gold Coins.");
