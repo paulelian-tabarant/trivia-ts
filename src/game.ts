@@ -82,7 +82,7 @@ export class Game implements Logger {
     }
 
     public handleCorrectAnswer(): void {
-        if (this.isPlayerInPenaltyBox[this.currentPlayerIndex]) {
+        if (this.players[this.currentPlayerIndex].isInPenaltyBox) {
             if (canPlayerGetOutOfPenaltyBox(this.currentPlayerRoll)) {
                 this.logger.log('Answer was correct!!!!')
             } else {
@@ -106,6 +106,7 @@ export class Game implements Logger {
         this.logger.log(this.players[this.currentPlayerIndex].name + " was sent to the penalty box");
 
         this.isPlayerInPenaltyBox[this.currentPlayerIndex] = true;
+        this.players[this.currentPlayerIndex].putToPenaltyBox();
 
         this.moveToNextPlayer();
     }
