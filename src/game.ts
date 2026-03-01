@@ -6,7 +6,6 @@ export class Game implements Logger {
 
     private readonly players: Array<Player> = [];
     private currentPlayerIndex: number = 0;
-    private currentPlayerRoll: number = 0;
 
     public static readonly BOARD_SIZE = 12;
     private static readonly NUMBER_OF_GOLD_COINS_TO_WIN = 6;
@@ -50,7 +49,7 @@ export class Game implements Logger {
         this.logger.log(this.currentPlayer.name + " is the current player");
 
         this.logger.log("They have rolled a " + roll);
-        this.currentPlayerRoll = roll;
+        this.currentPlayer.defineCurrentRoll(roll);
 
         if (this.currentPlayer.isInPenaltyBox) {
             if (canPlayerGetOutOfPenaltyBox(roll)) {
@@ -73,7 +72,7 @@ export class Game implements Logger {
 
     public handleCorrectAnswer(): void {
         if (this.currentPlayer.isInPenaltyBox) {
-            if (canPlayerGetOutOfPenaltyBox(this.currentPlayerRoll)) {
+            if (canPlayerGetOutOfPenaltyBox(this.currentPlayer.currentRoll)) {
                 this.logger.log('Answer was correct!!!!')
             } else {
                 this.moveToNextPlayer()

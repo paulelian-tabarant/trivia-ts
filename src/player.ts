@@ -6,6 +6,7 @@ export class Player {
     private _isInPenaltyBox: boolean;
     private _numberOfGoldCoins: number;
     private _location: number;
+    private _currentRoll: number;
 
     constructor(name: string, number: number, numberOfGoldCoins: number = 0, location: number = 0) {
         this.name = name;
@@ -38,5 +39,13 @@ export class Player {
 
     get location(): number {
         return this._location;
+    }
+
+    defineCurrentRoll(roll: number) {
+        this._currentRoll = roll;
+    }
+
+    get currentRoll(): number {
+        return this._currentRoll;
     }
 }
