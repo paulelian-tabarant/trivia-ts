@@ -38,14 +38,14 @@ export class Game implements Logger {
 
     constructor(players: string[], private readonly logger: Logger = this) {
         // FIXME: NaN is very likely to be a bug
-        this.players = players.map(name => new Player(name))
+        this.players = players.map(((name, index) => new Player(name, index + 1)));
         this.places = [NaN, ...new Array(players.length).fill(0)]
         this.purses = [NaN, ...new Array(players.length).fill(0)]
         this.isPlayerInPenaltyBox = [NaN, ...new Array(players.length).fill(false)]
 
         this.players.forEach((player, index) => {
             this.logger.log(player.name + " was added");
-            this.logger.log("They are player number " + (index + 1));
+            this.logger.log("They are player number " + (player.number));
         })
     }
 
