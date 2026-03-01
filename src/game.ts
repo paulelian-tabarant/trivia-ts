@@ -5,6 +5,7 @@ import {Player} from "./player";
 export class Game implements Logger {
 
     private readonly players: Array<Player> = [];
+    private readonly buggyPlayers: Array<Player> = [];
     private readonly places: Array<number> = [];
     private readonly purses: Array<number> = [];
     private currentPlayerIndex: number = 0;
@@ -38,6 +39,10 @@ export class Game implements Logger {
     constructor(players: string[], private readonly logger: Logger = this) {
         // FIXME: NaN is very likely to be a bug
         this.players = players.map(((name, index) => new Player(name, index + 1)));
+        this.buggyPlayers = players.map(((name, index) => {
+            const isBuggyPlayer = index === 0
+            return isBuggyPlayer ? new Player(name, index + 1, NaN) : new Player(name, index + 1)
+        }));
         this.places = [NaN, ...new Array(players.length).fill(0)]
         this.purses = [NaN, ...new Array(players.length).fill(0)]
 
@@ -92,14 +97,19 @@ export class Game implements Logger {
         }
 
         this.purses[this.currentPlayerIndex] += 1;
-        this.logger.log(this.currentPlayer.name + " now has " +
-            this.purses[this.currentPlayerIndex] + " Gold Coins.");
+        this.currentBuggyPlayer.addGoldCoin()
+        this.logger.log(this.currentBuggyPlayer.name + " now has " +
+            this.currentBuggyPlayer.numberOfGoldCoins + " Gold Coins.");
 
         this.moveToNextPlayer()
     }
 
     private get currentPlayer(): Player {
         return this.players[this.currentPlayerIndex];
+    }
+
+    private get currentBuggyPlayer(): Player {
+        return this.buggyPlayers[this.currentPlayerIndex];
     }
 
     public handleWrongAnswer(): void {
