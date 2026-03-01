@@ -30,10 +30,10 @@ export class Game implements Logger {
     }
 
     private static QUESTIONS_BY_CATEGORY: Record<QuestionCategory, string[]> = Object.values(QuestionCategory)
-        .reduce((acc, category) => {
-            acc[category] = createNQuestionsOfCategory(50, category);
-            return acc;
-        }, {} as Record<QuestionCategory, string[] | undefined>)
+        .reduce((acc, category) => ({
+            ...acc,
+            [category]: createNQuestionsOfCategory(50, category)
+        }), {} as Record<QuestionCategory, string[] | undefined>)
 
     constructor(players: string[], private readonly logger: Logger = this) {
         // FIXME: NaN is very likely to be a bug
