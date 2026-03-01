@@ -12,6 +12,22 @@ export class Game implements Logger {
     private currentPlayerIndex: number = 0;
     private currentPlayerRoll: number = 0;
 
+    private static BOARD: Record<number, QuestionCategory | undefined> = {
+        NaN: QuestionCategory.ROCK, // FIXME probable bug
+        0: QuestionCategory.POP,
+        1: QuestionCategory.SCIENCE,
+        2: QuestionCategory.SPORTS,
+        3: QuestionCategory.ROCK,
+        4: QuestionCategory.POP,
+        5: QuestionCategory.SCIENCE,
+        6: QuestionCategory.SPORTS,
+        7: QuestionCategory.ROCK,
+        8: QuestionCategory.POP,
+        9: QuestionCategory.SCIENCE,
+        10: QuestionCategory.SPORTS,
+        11: QuestionCategory.ROCK,
+    }
+
     private QUESTIONS_BY_CATEGORY: Record<QuestionCategory, string[]> = {
         [QuestionCategory.POP]: [],
         [QuestionCategory.SCIENCE]: [],
@@ -61,25 +77,10 @@ export class Game implements Logger {
         const questionToAsk = this.QUESTIONS_BY_CATEGORY[this.currentCategory()].shift()
         this.logger.log(questionToAsk);
     }
-
     private currentCategory(): string {
-        const CATEGORY_BY_PLACE: Record<number, QuestionCategory | undefined> = {
-            NaN: QuestionCategory.ROCK, // FIXME probable bug
-            0: QuestionCategory.POP,
-            1: QuestionCategory.SCIENCE,
-            2: QuestionCategory.SPORTS,
-            3: QuestionCategory.ROCK,
-            4: QuestionCategory.POP,
-            5: QuestionCategory.SCIENCE,
-            6: QuestionCategory.SPORTS,
-            7: QuestionCategory.ROCK,
-            8: QuestionCategory.POP,
-            9: QuestionCategory.SCIENCE,
-            10: QuestionCategory.SPORTS,
-            11: QuestionCategory.ROCK,
-        }
+        const currentPlayerPlace = this.places[this.currentPlayerIndex];
 
-        return CATEGORY_BY_PLACE[this.places[this.currentPlayerIndex]];
+        return Game.BOARD[currentPlayerPlace];
     }
 
     public handleCorrectAnswer(): void {
