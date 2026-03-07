@@ -1,11 +1,12 @@
 import {Logger} from "./logger";
-import {createNQuestionsOfCategory, QuestionCategory} from "./question";
+import {QuestionCategory, QuestionsDeck} from "./questions-deck";
 import {Player} from "./player";
 
 export class Game implements Logger {
 
     private readonly players: Array<Player> = [];
     private currentPlayerIndex: number = 0;
+    private readonly questionsDeck = new QuestionsDeck();
 
     public static readonly BOARD_SIZE = 12;
     private static readonly NUMBER_OF_GOLD_COINS_TO_WIN = 6;
@@ -25,12 +26,6 @@ export class Game implements Logger {
         10: QuestionCategory.SPORTS,
         11: QuestionCategory.ROCK,
     }
-
-    private static readonly QUESTIONS_BY_CATEGORY: Record<QuestionCategory, string[]> = Object.values(QuestionCategory)
-        .reduce((acc, category) => ({
-            ...acc,
-            [category]: createNQuestionsOfCategory(50, category)
-        }), {} as Record<QuestionCategory, string[]>)
 
     constructor(playerNames: string[], private readonly logger: Logger = this) {
         this.players = playerNames.map(((name, index) => {
@@ -67,7 +62,7 @@ export class Game implements Logger {
         const currentCategory = Game.BOARD[this.currentPlayer.location];
         this.logger.log("The category is " + currentCategory);
 
-        const questionToAsk = Game.QUESTIONS_BY_CATEGORY[currentCategory].shift()
+        const questionToAsk = this.questionsDeck.pickQuestion(currentCategory)
         this.logger.log(questionToAsk);
     }
 
