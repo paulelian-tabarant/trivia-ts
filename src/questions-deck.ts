@@ -12,11 +12,11 @@ export class QuestionsDeck {
             [category]: QuestionsDeck.createNQuestionsOfCategory(50, category)
         }), {} as Record<QuestionCategory, string[]>)
 
-    public pickQuestionOfCategory(category: QuestionCategory): string {
-        return this.questionsByCategory[category].shift()
-    }
-
     private static createNQuestionsOfCategory(n: number, category: QuestionCategory): string[] {
         return [...Array(n)].map((_, index) => `${category} Question ${index}`);
+    }
+
+    public pickQuestionOfCategory(category: QuestionCategory): string {
+        return this.questionsByCategory[category].shift()
     }
 }
