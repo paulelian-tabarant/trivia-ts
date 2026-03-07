@@ -41,7 +41,7 @@ export class Game implements Logger {
                 new Player(name, index + 1)
         }));
 
-        this.players.forEach((player, index) => {
+        this.players.forEach(player => {
             this.logger.log(player.name + " was added");
             this.logger.log("They are player number " + (player.number));
         })
