@@ -98,6 +98,10 @@ export class Game implements Logger {
         this.moveToNextPlayer();
     }
 
+    public hasNoWinnerYet() {
+        return !(this.players.some(p => p.numberOfGoldCoins === Game.NUMBER_OF_GOLD_COINS_TO_WIN));
+    }
+
     private get currentPlayer(): Player {
         return this.players[this.currentPlayerIndex];
     }
@@ -105,10 +109,6 @@ export class Game implements Logger {
     private moveToNextPlayer() {
         this.currentPlayerIndex += 1;
         this.currentPlayerIndex %= this.players.length;
-    }
-
-    public hasNoWinnerYet() {
-        return !(this.players.some(p => p.numberOfGoldCoins === Game.NUMBER_OF_GOLD_COINS_TO_WIN));
     }
 
     public log(message: string) {
