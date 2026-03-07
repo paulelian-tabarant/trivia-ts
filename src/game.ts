@@ -16,8 +16,8 @@ export class Game implements Logger {
             const isBuggyPlayer = index === 0
             // FIXME: NaN is very likely to be a bug
             return isBuggyPlayer ?
-                new Player(name, index + 1, this.board.size, NaN, NaN) :
-                new Player(name, index + 1, this.board.size)
+                new Player(name, index + 1, NaN, NaN) :
+                new Player(name, index + 1)
         }));
 
         this.players.forEach(player => {
@@ -40,7 +40,7 @@ export class Game implements Logger {
             this.logger.log(this.currentPlayer.name + " is getting out of the penalty box");
         }
 
-        this.currentPlayer.move(roll)
+        this.currentPlayer.move(roll, this.board.size);
         this.logger.log(this.currentPlayer.name + "'s new location is " + this.currentPlayer.location);
 
         const currentCategory = this.board.readCategoryAtLocation(this.currentPlayer.location);

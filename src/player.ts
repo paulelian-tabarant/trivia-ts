@@ -1,7 +1,6 @@
 export class Player {
     public readonly name: string;
     public readonly number: number;
-    private readonly boardSize: number;
 
     private _location: number;
     private _numberOfGoldCoins: number;
@@ -10,10 +9,9 @@ export class Player {
 
     private static readonly NUMBER_OF_GOLD_COINS_TO_WIN = 6;
 
-    constructor(name: string, number: number, boardSize: number, numberOfGoldCoins: number = 0, location: number = 0) {
+    constructor(name: string, number: number, numberOfGoldCoins: number = 0, location: number = 0) {
         this.name = name;
         this.number = number;
-        this.boardSize = boardSize;
 
         this._location = location;
         this._numberOfGoldCoins = numberOfGoldCoins;
@@ -47,9 +45,9 @@ export class Player {
         this._numberOfGoldCoins += 1;
     }
 
-    move(roll: number): void {
+    move(roll: number, wrapAround: number): void {
         this._location += roll;
-        this._location %= this.boardSize;
+        this._location %= wrapAround;
     }
 
     registerLastRoll(roll: number) {
