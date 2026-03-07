@@ -16,8 +16,8 @@ export class Game implements Logger {
             const isBuggyPlayer = index === 0
             // FIXME: NaN is very likely to be a bug
             return isBuggyPlayer ?
-                new Player(name, index + 1, NaN, NaN) :
-                new Player(name, index + 1)
+                new Player(name, index + 1, this.board.size, NaN, NaN) :
+                new Player(name, index + 1, this.board.size)
         }));
 
         this.players.forEach(player => {

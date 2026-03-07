@@ -1,22 +1,22 @@
-import {Board} from "./board";
-
 export class Player {
     public readonly name: string;
     public readonly number: number;
+    private readonly boardSize: number;
 
-    private _numberOfGoldCoins: number;
     private _location: number;
-    private isInPenaltyBox: boolean;
+    private _numberOfGoldCoins: number;
+    private isInPenaltyBox: boolean = false;
     private lastRoll: number;
 
     private static readonly NUMBER_OF_GOLD_COINS_TO_WIN = 6;
 
-    constructor(name: string, number: number, numberOfGoldCoins: number = 0, location: number = 0) {
+    constructor(name: string, number: number, boardSize: number, numberOfGoldCoins: number = 0, location: number = 0) {
         this.name = name;
         this.number = number;
-        this.isInPenaltyBox = false;
-        this._numberOfGoldCoins = numberOfGoldCoins;
+        this.boardSize = boardSize;
+
         this._location = location;
+        this._numberOfGoldCoins = numberOfGoldCoins;
     }
 
     get numberOfGoldCoins(): number {
@@ -49,7 +49,7 @@ export class Player {
 
     move(roll: number): void {
         this._location += roll;
-        this._location %= Board.BOARD_SIZE;
+        this._location %= this.boardSize;
     }
 
     registerLastRoll(roll: number) {
