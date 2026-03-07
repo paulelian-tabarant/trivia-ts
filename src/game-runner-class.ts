@@ -24,7 +24,7 @@ export class GameRunner implements GameMaster {
                 game.handleWrongAnswer();
             }
 
-        } while (game.doesNotHaveWinner());
+        } while (game.hasNoWinnerYet());
     }
 
     rollDice() {

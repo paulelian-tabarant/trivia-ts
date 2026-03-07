@@ -107,7 +107,7 @@ export class Game implements Logger {
         this.currentPlayerIndex %= this.players.length;
     }
 
-    public doesNotHaveWinner() {
+    public hasNoWinnerYet() {
         return !(this.players.some(p => p.numberOfGoldCoins === Game.NUMBER_OF_GOLD_COINS_TO_WIN));
     }
 
