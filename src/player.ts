@@ -42,13 +42,13 @@ export class Player {
         this.isInPenaltyBox = true;
     }
 
-    addGoldCoin(): void {
+    giveOneGoldCoin(): void {
         this._numberOfGoldCoins += 1;
     }
 
-    move(roll: number, wrapAround: number): void {
+    move(roll: number, locationLimit: number): void {
         this._location += roll;
-        this._location %= wrapAround;
+        this._location %= locationLimit;
     }
 
     registerLastRoll(roll: number) {

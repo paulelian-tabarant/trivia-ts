@@ -62,7 +62,7 @@ export class Game implements Logger {
             'Answer was corrent!!!!';
         this.logger.log(correctAnswerLogMessage)
 
-        this.currentPlayer.addGoldCoin()
+        this.currentPlayer.giveOneGoldCoin()
         this.logger.log(this.currentPlayer.name + " now has " + this.currentPlayer.numberOfGoldCoins + " Gold Coins.");
 
         this.moveToNextPlayer()
