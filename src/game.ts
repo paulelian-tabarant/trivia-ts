@@ -10,7 +10,6 @@ export class Game implements Logger {
     private readonly questionsDeck = new QuestionsDeck();
     private readonly board = new Board();
 
-    public static readonly BOARD_SIZE = 12;
     private static readonly NUMBER_OF_GOLD_COINS_TO_WIN = 6;
 
     constructor(playerNames: string[], private readonly logger: Logger = this) {

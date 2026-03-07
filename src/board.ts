@@ -1,6 +1,8 @@
 import {QuestionCategory} from "./questions-deck";
 
 export class Board {
+    public static readonly BOARD_SIZE = 12;
+
     private readonly categoryByLocation: Record<number, QuestionCategory | undefined> = {
         NaN: QuestionCategory.ROCK, // FIXME probable bug
         0: QuestionCategory.POP,

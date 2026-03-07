@@ -1,4 +1,4 @@
-import {Game} from "./game";
+import {Board} from "./board";
 
 export class Player {
     public readonly name: string;
@@ -47,7 +47,7 @@ export class Player {
 
     move(roll: number): void {
         this._location += roll;
-        this._location %= Game.BOARD_SIZE;
+        this._location %= Board.BOARD_SIZE;
     }
 
     registerLastRoll(roll: number) {
