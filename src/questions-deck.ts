@@ -12,7 +12,7 @@ export class QuestionsDeck {
             [category]: QuestionsDeck.createNQuestionsOfCategory(50, category)
         }), {} as Record<QuestionCategory, string[]>)
 
-    public pickQuestion(category: QuestionCategory): string {
+    public pickQuestionOfCategory(category: QuestionCategory): string {
         return this.questionsByCategory[category].shift()
     }
 

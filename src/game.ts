@@ -1,31 +1,17 @@
 import {Logger} from "./logger";
-import {QuestionCategory, QuestionsDeck} from "./questions-deck";
+import {QuestionsDeck} from "./questions-deck";
 import {Player} from "./player";
+import {Board} from "./board";
 
 export class Game implements Logger {
 
     private readonly players: Array<Player> = [];
     private currentPlayerIndex: number = 0;
     private readonly questionsDeck = new QuestionsDeck();
+    private readonly board = new Board();
 
     public static readonly BOARD_SIZE = 12;
     private static readonly NUMBER_OF_GOLD_COINS_TO_WIN = 6;
-
-    private static readonly BOARD: Record<number, QuestionCategory | undefined> = {
-        NaN: QuestionCategory.ROCK, // FIXME probable bug
-        0: QuestionCategory.POP,
-        1: QuestionCategory.SCIENCE,
-        2: QuestionCategory.SPORTS,
-        3: QuestionCategory.ROCK,
-        4: QuestionCategory.POP,
-        5: QuestionCategory.SCIENCE,
-        6: QuestionCategory.SPORTS,
-        7: QuestionCategory.ROCK,
-        8: QuestionCategory.POP,
-        9: QuestionCategory.SCIENCE,
-        10: QuestionCategory.SPORTS,
-        11: QuestionCategory.ROCK,
-    }
 
     constructor(playerNames: string[], private readonly logger: Logger = this) {
         this.players = playerNames.map(((name, index) => {
@@ -59,10 +45,10 @@ export class Game implements Logger {
         this.currentPlayer.move(roll)
         this.logger.log(this.currentPlayer.name + "'s new location is " + this.currentPlayer.location);
 
-        const currentCategory = Game.BOARD[this.currentPlayer.location];
+        const currentCategory = this.board.readCategoryAtLocation(this.currentPlayer.location);
         this.logger.log("The category is " + currentCategory);
 
-        const questionToAsk = this.questionsDeck.pickQuestion(currentCategory)
+        const questionToAsk = this.questionsDeck.pickQuestionOfCategory(currentCategory)
         this.logger.log(questionToAsk);
     }
 
