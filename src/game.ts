@@ -6,11 +6,10 @@ import {Board} from "./board";
 export class Game implements Logger {
 
     private readonly players: Array<Player> = [];
-    private currentPlayerIndex: number = 0;
-
     private readonly questionsDeck = new QuestionsDeck();
-
     private readonly board = new Board();
+
+    private currentPlayerIndex: number = 0;
 
     constructor(playerNames: string[], private readonly logger: Logger = this) {
         this.players = playerNames.map(((name, index) => {
