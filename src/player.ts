@@ -9,6 +9,8 @@ export class Player {
     private isInPenaltyBox: boolean;
     private lastRoll: number;
 
+    private static readonly NUMBER_OF_GOLD_COINS_TO_WIN = 6;
+
     constructor(name: string, number: number, numberOfGoldCoins: number = 0, location: number = 0) {
         this.name = name;
         this.number = number;
@@ -52,5 +54,9 @@ export class Player {
 
     registerLastRoll(roll: number) {
         this.lastRoll = roll;
+    }
+
+    hasWon(): boolean {
+        return this.numberOfGoldCoins === Player.NUMBER_OF_GOLD_COINS_TO_WIN;
     }
 }

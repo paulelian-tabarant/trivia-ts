@@ -7,10 +7,10 @@ export class Game implements Logger {
 
     private readonly players: Array<Player> = [];
     private currentPlayerIndex: number = 0;
-    private readonly questionsDeck = new QuestionsDeck();
-    private readonly board = new Board();
 
-    private static readonly NUMBER_OF_GOLD_COINS_TO_WIN = 6;
+    private readonly questionsDeck = new QuestionsDeck();
+
+    private readonly board = new Board();
 
     constructor(playerNames: string[], private readonly logger: Logger = this) {
         this.players = playerNames.map(((name, index) => {
@@ -79,7 +79,7 @@ export class Game implements Logger {
     }
 
     public hasNoWinnerYet() {
-        return !(this.players.some(p => p.numberOfGoldCoins === Game.NUMBER_OF_GOLD_COINS_TO_WIN));
+        return !(this.players.some(player => player.hasWon()));
     }
 
     private get currentPlayer(): Player {
