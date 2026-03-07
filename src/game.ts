@@ -47,7 +47,7 @@ export class Game implements Logger {
         })
     }
 
-    public playCurrentPlayerTurn(roll: number) {
+    public playNextTurn(roll: number) {
         this.logger.log(this.currentPlayer.name + " is the current player");
         this.logger.log("They have rolled a " + roll);
         this.currentPlayer.registerLastRoll(roll);

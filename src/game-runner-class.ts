@@ -16,7 +16,8 @@ export class GameRunner implements GameMaster {
 
         do {
             const roll = this.gameMaster.rollDice();
-            game.playCurrentPlayerTurn(roll);
+
+            game.playNextTurn(roll);
 
             if (this.gameMaster.gotCorrectAnswer()) {
                 game.handleCorrectAnswer();
