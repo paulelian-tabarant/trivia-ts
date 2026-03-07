@@ -10,7 +10,7 @@ export class Game implements Logger {
     public static readonly BOARD_SIZE = 12;
     private static readonly NUMBER_OF_GOLD_COINS_TO_WIN = 6;
 
-    private static BOARD: Record<number, QuestionCategory | undefined> = {
+    private static readonly BOARD: Record<number, QuestionCategory | undefined> = {
         NaN: QuestionCategory.ROCK, // FIXME probable bug
         0: QuestionCategory.POP,
         1: QuestionCategory.SCIENCE,
@@ -30,10 +30,10 @@ export class Game implements Logger {
         .reduce((acc, category) => ({
             ...acc,
             [category]: createNQuestionsOfCategory(50, category)
-        }), {} as Record<QuestionCategory, string[] | undefined>)
+        }), {} as Record<QuestionCategory, string[]>)
 
-    constructor(players: string[], private readonly logger: Logger = this) {
-        this.players = players.map(((name, index) => {
+    constructor(playerNames: string[], private readonly logger: Logger = this) {
+        this.players = playerNames.map(((name, index) => {
             const isBuggyPlayer = index === 0
             // FIXME: NaN is very likely to be a bug
             return isBuggyPlayer ?
