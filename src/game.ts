@@ -26,7 +26,7 @@ export class Game implements Logger {
         11: QuestionCategory.ROCK,
     }
 
-    private static QUESTIONS_BY_CATEGORY: Record<QuestionCategory, string[]> = Object.values(QuestionCategory)
+    private static readonly QUESTIONS_BY_CATEGORY: Record<QuestionCategory, string[]> = Object.values(QuestionCategory)
         .reduce((acc, category) => ({
             ...acc,
             [category]: createNQuestionsOfCategory(50, category)
