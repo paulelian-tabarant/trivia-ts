@@ -6,11 +6,5 @@ export enum QuestionCategory {
 }
 
 export function createNQuestionsOfCategory(n: number, category: QuestionCategory): string[] {
-    return [...(new Array(n))].map(
-        (_, index) => nameOfQuestionWith(category, index)
-    );
-}
-
-function nameOfQuestionWith(questionCategory: QuestionCategory, questionNumber: number) {
-    return `${questionCategory} Question ${questionNumber}`;
+    return [...Array(n)].map((_, index) => `${category} Question ${index}`);
 }
